@@ -18,6 +18,11 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        "auth-dark": "url('/assets/images/auth-dark.png')",
+        "auth-light": "url('/assets/images/auth-light.png')",
+      },
+
       fontFamily: {
         inter: ["var(--font-inter)"],
         spaceGrotesk: ["var(--font-spaceGrotesk)"],

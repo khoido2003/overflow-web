@@ -11,6 +11,30 @@ body {
   scrollbar-color: #404040 #27272a00;
 }
 
+/* Draw line */
+.authorize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.authorize::before,
+.authorize::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background-color: #d4d4d456;
+}
+
+/* ///////////////////////////////////// */
+
+/* Reusable style */
+
+.active-link {
+  @apply text-xs text-muted-foreground hover:font-semibold hover:text-foreground hover:underline;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

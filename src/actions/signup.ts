@@ -35,6 +35,8 @@ export const register = async (values: registerPayload) => {
       },
     });
 
+    return { success: "Create account successfully" };
+
     redirect("/");
   } catch (err) {
     console.log(err);

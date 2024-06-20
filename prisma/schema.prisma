@@ -19,7 +19,7 @@ model User {
   portfolioWebsite String?
   reputation       Int?      @default(0)
   joinedAt         DateTime? @default(now())
-  emailVerified    DateTime
+  emailVerified    DateTime?
 
   account                 Account[]                     @relation("account")
   session                 Session[]
@@ -49,6 +49,8 @@ model Account {
   session_state     String?
 
   user User @relation("account", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model Session {

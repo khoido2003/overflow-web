@@ -19,6 +19,10 @@ export const login = async (values: loginPayload) => {
       password,
       redirectTo: "/",
     });
+
+    return {
+      success: "Login successfully!",
+    };
   } catch (err) {
     if (err instanceof AuthError) {
       switch (err.type) {
