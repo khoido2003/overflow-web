@@ -45,6 +45,8 @@ export const {
         },
       });
 
+      console.log(dbUser);
+
       if (!dbUser) {
         token.id = user.id as string;
         return token;
@@ -79,7 +81,7 @@ export const {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email as string;
-        session.user.image = token.picture;
+        session.user.image = token.image as string;
         session.user.username = token.username;
         session.user.token = token.token;
       }

@@ -28,8 +28,8 @@ export const LeftSidebar = () => {
   });
 
   return (
-    <section className="sticky left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto bg-zinc-100 p-6 pt-36 dark:bg-zinc-900 sm:flex lg:w-[266px]">
-      <div className="flex flex-col items-center justify-between gap-12">
+    <section className="sticky left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto bg-zinc-100 p-4 pt-36 dark:bg-zinc-900 sm:flex lg:w-[266px]">
+      <div className="flex h-full flex-col items-center justify-between gap-12">
         {/* Navbar */}
         <div className="flex flex-col items-start gap-2">
           {sidebarLinks.map((link) => {
@@ -92,7 +92,7 @@ export const LeftSidebar = () => {
 
           {session.data?.user && (
             <Button
-              className="mt-10 w-full"
+              className="w-full"
               variant="tertiary"
               onClick={async () => {
                 await logOut();
