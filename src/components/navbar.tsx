@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./toggle-mode";
 import { GlobalSearch } from "./global-search";
+import { ToggleSidebarMobile } from "./toggle-sidebar-mobile";
 
 export const Navbar = () => {
   return (
@@ -17,8 +18,12 @@ export const Navbar = () => {
 
       <GlobalSearch />
 
-      <div className="flex">
+      <div className="flex items-center justify-center gap-4">
+        {/* Toggle dark/light mode */}
         <ModeToggle />
+
+        {/* Open/CLose the mobile sidebar */}
+        <ToggleSidebarMobile />
       </div>
     </nav>
   );

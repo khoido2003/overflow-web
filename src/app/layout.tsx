@@ -3,6 +3,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
+import { MobileSidebarProvider } from "@/providers/mobile-sidebar-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,11 +35,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
 
-        <Toaster position="top-center" />
+            {/* Use global state with zustand to handle open the sidebar menu in mobile */}
+            <MobileSidebarProvider />
+          </ThemeProvider>
+
+          <Toaster position="top-center" />
+        </SessionProvider>
       </body>
     </html>
   );

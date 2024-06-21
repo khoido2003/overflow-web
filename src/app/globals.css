@@ -27,6 +27,27 @@ body {
   background-color: #d4d4d456;
 }
 
+@keyframes wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.active-link-sidebar {
+  @apply bg-gradient-to-r from-orange-500 via-orange-500 to-orange-300 text-white;
+  background-size: 200% 200%;
+}
+
+.active-link-sidebar:hover {
+  animation: wave 2s linear infinite;
+}
+
 /* ///////////////////////////////////// */
 
 /* Reusable style */

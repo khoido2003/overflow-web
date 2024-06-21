@@ -19,7 +19,14 @@ export const Social = () => {
 
   return (
     <div className="flex w-full items-center justify-center gap-x-2">
-      <Button className="w-full text-center" size="lg" variant="outline">
+      <Button
+        className="w-full text-center"
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          onClick("github");
+        }}
+      >
         <FcGoogle className="h-5 w-5" />
         <span
           className="ml-3"
@@ -31,16 +38,16 @@ export const Social = () => {
         </span>
       </Button>
 
-      <Button className="w-full text-center" size="lg" variant="outline">
+      <Button
+        className="w-full text-center"
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          onClick("github");
+        }}
+      >
         <FaGithub className="h-5 w-5" />
-        <span
-          className="ml-3"
-          onClick={() => {
-            onClick("github");
-          }}
-        >
-          Github
-        </span>
+        <span className="ml-3">Github</span>
       </Button>
     </div>
   );
