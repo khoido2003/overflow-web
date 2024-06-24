@@ -45,7 +45,7 @@ export const {
         },
       });
 
-      console.log(dbUser);
+      // console.log(dbUser);
 
       if (!dbUser) {
         token.id = user.id as string;

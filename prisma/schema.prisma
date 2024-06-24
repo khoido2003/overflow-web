@@ -8,23 +8,22 @@ datasource db {
 }
 
 model User {
-  id               String    @id @default(uuid())
-  name             String
-  username         String?   @unique
-  email            String    @unique
-  password         String?
-  bio              String?
-  image            String?
-  location         String?
-  portfolioWebsite String?
-  reputation       Int?      @default(0)
-  joinedAt         DateTime? @default(now())
-  emailVerified    DateTime?
-
+  id                      String                        @id @default(uuid())
+  name                    String
+  username                String?                       @unique
+  email                   String                        @unique
+  password                String?
+  bio                     String?
+  location                String?
+  portfolioWebsite        String?
+  reputation              Int?                          @default(0)
+  joinedAt                DateTime?                     @default(now())
+  emailVerified           DateTime?
+  image                   String?
   account                 Account[]                     @relation("account")
-  session                 Session[]
   userInteraction         Interaction[]                 @relation("userInteraction")
   questions               Question[]                    @relation("questionsAsk")
+  session                 Session[]
   tagsFollow              TagFollower[]                 @relation("tagFollow")
   answerQuestions         UserAnswerQuestion[]          @relation("answerQuestions")
   answerQuestionDownvotes UserAnswerQuestionDownvotes[] @relation("answerQuestionsDownvotes")
@@ -47,10 +46,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation("account", fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+  user              User    @relation("account", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -78,11 +74,12 @@ model Question {
 }
 
 model Tag {
-  id            String          @id @default(uuid())
-  desctiption   String
-  createdAt     DateTime        @default(now())
-  tagFollower   TagFollower[]   @relation("tagFollow")
-  tagOnQuestion TagOnQuestion[] @relation("tagOnQuestion")
+  id             String           @id @default(uuid())
+  desctiption    String
+  createdAt      DateTime         @default(now())
+  tagFollower    TagFollower[]    @relation("tagFollow")
+  TagInteraction TagInteraction[]
+  tagOnQuestion  TagOnQuestion[]  @relation("tagOnQuestion")
 }
 
 model Interaction {
@@ -94,6 +91,7 @@ model Interaction {
   question             Question?           @relation("userInteraction", fields: [questionId], references: [id])
   userAnswerQuestion   UserAnswerQuestion? @relation("userInteraction", fields: [userAnswerQuestionId], references: [id])
   user                 User?               @relation("userInteraction", fields: [userId], references: [id])
+  TagInteraction       TagInteraction[]
 }
 
 model UserAnswerQuestion {
@@ -167,4 +165,12 @@ model UserAnswerQuestionDownvotes {
   questionAnsweredId String?
   questionAnswered   UserAnswerQuestion? @relation("answerQuestionsDownvotes", fields: [questionAnsweredId], references: [id])
   user               User?               @relation("answerQuestionsDownvotes", fields: [userId], references: [id])
+}
+
+model TagInteraction {
+  id            String      @id
+  interactionId String
+  tagId         String?
+  Interaction   Interaction @relation(fields: [interactionId], references: [id])
+  Tag           Tag?        @relation(fields: [tagId], references: [id])
 }

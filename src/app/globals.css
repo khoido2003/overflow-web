@@ -39,12 +39,12 @@ body {
   }
 }
 
-.active-link-sidebar {
+.active-link-btn {
   @apply bg-gradient-to-r from-orange-500 via-orange-500 to-orange-300 text-white;
   background-size: 200% 200%;
 }
 
-.active-link-sidebar:hover {
+.active-link-btn:hover {
   animation: wave 2s linear infinite;
 }
 

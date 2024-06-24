@@ -55,7 +55,7 @@ export const SidebarMobile = () => {
                     className={cn(
                       "flex w-full items-center justify-start gap-4 rounded-lg p-4 hover:no-underline",
                       {
-                        "active-link-sidebar": pathname === link.route,
+                        "active-link-btn": pathname === link.route,
                       },
                     )}
                     key={link.label}

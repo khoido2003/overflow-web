@@ -9,8 +9,6 @@ export const UserAvatar = async () => {
 
   if (!session) return null;
 
-  console.log(session.user.image);
-
   return (
     <Link href="/profile">
       <Avatar className="h-9 w-9 bg-white">

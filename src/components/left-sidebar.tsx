@@ -14,18 +14,20 @@ export const LeftSidebar = () => {
   const pathname = usePathname();
   const session = useSession();
 
-  useEffect(() => {
-    if (session.data?.user) {
-      toast.message(`Welcome back, ${session.data.user.name}`, {
-        action: {
-          label: "Close",
-          onClick: () => {
-            toast.dismiss();
-          },
-        },
-      });
-    }
-  });
+  // Cool but annoy 😥
+
+  // useEffect(() => {
+  //   if (session.data?.user) {
+  //     toast.message(`Welcome back, ${session.data.user.name}`, {
+  //       action: {
+  //         label: "Close",
+  //         onClick: () => {
+  //           toast.dismiss();
+  //         },
+  //       },
+  //     });
+  //   }
+  // });
 
   return (
     <section className="sticky left-0 top-0 hidden h-screen flex-col justify-between overflow-y-auto bg-zinc-100 p-4 pt-36 dark:bg-zinc-900 sm:flex lg:w-[266px]">
@@ -39,7 +41,7 @@ export const LeftSidebar = () => {
                 className={cn(
                   "flex w-full items-center justify-start gap-4 rounded-lg p-4 hover:no-underline",
                   {
-                    "active-link-sidebar": pathname === link.route,
+                    "active-link-btn": pathname === link.route,
                   },
                 )}
                 key={link.label}
