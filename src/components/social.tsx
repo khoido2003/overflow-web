@@ -24,18 +24,11 @@ export const Social = () => {
         size="lg"
         variant="outline"
         onClick={() => {
-          onClick("github");
+          onClick("google");
         }}
       >
         <FcGoogle className="h-5 w-5" />
-        <span
-          className="ml-3"
-          onClick={() => {
-            onClick("google");
-          }}
-        >
-          Google
-        </span>
+        <span className="ml-3">Google</span>
       </Button>
 
       <Button

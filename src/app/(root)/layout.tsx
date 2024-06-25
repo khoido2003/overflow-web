@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/navbar";
 import { LeftSidebar } from "@/components/left-sidebar";
 import { RightSidebar } from "@/components/right-sidebar";
-import { QueryProvider } from "@/components/providers/query-provider";
+import { QueryProvider } from "@/context/query-provider";
 import { SessionProvider } from "next-auth/react";
 
 interface LayoutProps {

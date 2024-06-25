@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
-import { MobileSidebarProvider } from "@/providers/mobile-sidebar-provider";
+import { MobileSidebarProvider } from "@/context/mobile-sidebar-provider";
 
 const inter = Inter({
   subsets: ["latin"],

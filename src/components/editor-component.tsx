@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useRef } from "react";
 import { ControllerRenderProps, useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
+import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 import { Input } from "./ui/input";
 import {
@@ -19,14 +21,28 @@ import {
 import { Editor } from "@tinymce/tinymce-react";
 
 import { AskQuestionPayload, AskQuestionValiadator } from "@/lib/schemas/form";
-import { Button } from "./ui/button";
-import { Send } from "lucide-react";
-import { Badge } from "./ui/badge";
+import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
+import { CreateQuestionParams } from "@/types/question.types";
 
-export const EditorComponent = () => {
+import { Button } from "./ui/button";
+import { Loader2, Send, X } from "lucide-react";
+import { Badge } from "./ui/badge";
+import { toast } from "sonner";
+
+interface EditorComponentProps {
+  type: string;
+}
+
+export const EditorComponent = ({ type }: EditorComponentProps) => {
   const { resolvedTheme } = useTheme();
   const editorRef = useRef(null);
 
+  // The current login user
+  const session = useSession();
+
+  console.log(session.data?.user.token);
+
+  // Declare form hook
   const form = useForm<AskQuestionPayload>({
     resolver: zodResolver(AskQuestionValiadator),
     defaultValues: {
@@ -36,11 +52,62 @@ export const EditorComponent = () => {
     },
   });
 
+  // Handle submit form
+  const { mutate: submitForm, isPending } = useMutation({
+    mutationFn: async ({
+      content,
+      tags,
+      title,
+      author,
+    }: CreateQuestionParams) => {
+      const values = { content, tags, title, author };
+
+      const response = await fetch(`${API_REQUEST_PREFIX}/questions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      return data;
+    },
+
+    onError: () => {
+      toast.error("There is something wrong when create your question!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+    },
+
+    onSuccess: () => {
+      toast.success("Successfully create question!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+    },
+  });
+
   // Handle submit form to the database
-  const onSubmit = (values: AskQuestionPayload) => {
-    console.log(values);
+  const onSubmit = (values: CreateQuestionParams) => {
+    const data = { ...values, author: session.data?.user.id };
+
+    submitForm(data);
   };
 
+  // When user type Enter key then save the tag to the list and display it
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     field: ControllerRenderProps<
@@ -67,17 +134,35 @@ export const EditorComponent = () => {
             message: "Tag must be less than 15 characters",
           });
         }
-      }
 
-      // Handle the case when user type the same tag value twice or more, if the tag already exists then not save to the current tags list
-      if (!field.value.includes(tagValue as never)) {
-        form.setValue("tags", [...field.value, tagValue]);
-        tagInput.value = "";
-        form.clearErrors("tags");
+        // Handle the case when user type the same tag value twice or more, if the tag already exists then not save to the current tags list
+        if (!field.value.includes(tagValue as never)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
+        }
       } else {
+        // Trigger the validation to popp error message
         form.trigger();
       }
     }
+  };
+
+  // Delete a single tag
+  const handelDeleteTag = (
+    tag: string,
+    field: ControllerRenderProps<
+      {
+        title: string;
+        content: string;
+        tags: string[];
+      },
+      "tags"
+    >,
+  ) => {
+    const newTagsList = field.value.filter((v: string) => tag !== v);
+
+    form.setValue("tags", newTagsList);
   };
 
   return (
@@ -157,7 +242,7 @@ export const EditorComponent = () => {
                       menubar: true,
                       elementpath: false,
                     }}
-                    initialValue="Write your question here..."
+                    initialValue=""
                     onBlur={field.onBlur}
                     onEditorChange={(content) => field.onChange(content)}
                   />
@@ -186,18 +271,26 @@ export const EditorComponent = () => {
                   <>
                     <Input
                       className="rounded-lg dark:bg-[#222F3E] dark:placeholder:text-slate-200"
-                      {...field}
                       placeholder="Add tags..."
                       onKeyDown={(e) => handleInputKeyDown(e, field)}
                     />
 
-                    {/* {field.value.length > 0 && (
+                    {field.value.length > 0 && (
                       <div className="flex-start mt-2.5 flex gap-2.5">
                         {field.value.map((tag: any) => {
-                          return <Badge key={tag}>{tag}</Badge>;
+                          return (
+                            <Badge key={tag}>
+                              {tag}
+
+                              <X
+                                className="ml-1 h-4 w-4 cursor-pointer"
+                                onClick={() => handelDeleteTag(tag, field)}
+                              />
+                            </Badge>
+                          );
                         })}
                       </div>
-                    )} */}
+                    )}
                   </>
                 </FormControl>
 
@@ -213,8 +306,14 @@ export const EditorComponent = () => {
           }}
         />
 
-        <Button className="rounded-lg py-6">
-          Ask question <Send className="ml-2 h-4 w-4" />
+        <Button disabled={isPending} className="rounded-lg py-6">
+          {isPending ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <span className="flex items-center justify-center">
+              Ask question <Send className="ml-2 h-4 w-4" />
+            </span>
+          )}
         </Button>
       </form>
     </Form>
