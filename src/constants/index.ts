@@ -4,8 +4,6 @@ import {
   Home,
   LucideIcon,
   StarIcon,
-  Stars,
-  StarsIcon,
   Tag,
   User,
   Users,
@@ -54,4 +52,11 @@ export const sidebarLinks: SidebarLink[] = [
     route: "/ask-question",
     label: "Ask a question",
   },
+];
+
+export const filterBarHomepage = [
+  { name: "Newest", value: "newest" },
+  { name: "Recommended", value: "recommended" },
+  { name: "Frequent", value: "frequent" },
+  { name: "Unanswered", value: "unanswered" },
 ];
