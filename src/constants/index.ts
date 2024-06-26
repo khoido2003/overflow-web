@@ -1,10 +1,13 @@
 import {
   Briefcase,
   CircleHelp,
+  Eye,
   Home,
   LucideIcon,
+  MessageCircle,
   StarIcon,
   Tag,
+  ThumbsUp,
   User,
   Users,
 } from "lucide-react";
@@ -59,4 +62,19 @@ export const filterBarHomepage = [
   { name: "Recommended", value: "recommended" },
   { name: "Frequent", value: "frequent" },
   { name: "Unanswered", value: "unanswered" },
+];
+
+export const Metric = [
+  {
+    title: "Votes",
+    Icon: ThumbsUp,
+  },
+  {
+    title: "Answers",
+    Icon: MessageCircle,
+  },
+  {
+    title: "Views",
+    Icon: Eye,
+  },
 ];
