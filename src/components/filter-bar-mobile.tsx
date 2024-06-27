@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
 
 interface FilterBarMobileProps {
   filters: {
@@ -18,9 +20,32 @@ interface FilterBarMobileProps {
 }
 
 export const FilterBarMobile = ({ filters }: FilterBarMobileProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const paramsFilter = searchParams.get("filters");
+
+  const handleFilterClick = (value: string) => {
+    const url = qs.stringifyUrl(
+      {
+        url: window.location.href,
+        query: {
+          filter: value,
+        },
+      },
+      {
+        skipNull: true,
+        skipEmptyString: true,
+      },
+    );
+
+    router.push(url, { scroll: false });
+  };
   return (
     <div className="block md:hidden">
-      <Select onValueChange={() => {}} defaultValue={undefined}>
+      <Select
+        onValueChange={handleFilterClick}
+        defaultValue={paramsFilter || undefined}
+      >
         <SelectTrigger className={cn("")}>
           <div className="line-clamp-1 flex-1 text-left">
             <SelectValue placeholder="Select a filter"></SelectValue>

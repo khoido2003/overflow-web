@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Metric } from "@/constants";
 import { MetricComponent } from "./metric";
+import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 
 interface QuestionCardProps {
   question: GetQuestion;
@@ -42,16 +43,19 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
         </div>
 
         <div className="flex items-center justify-start gap-4">
-          {Metric.map((item) => {
-            return (
-              <MetricComponent
-                key={item.title}
-                Icon={item.Icon}
-                title={item.title}
-                value={12}
-              />
-            );
-          })}
+          <MetricComponent
+            Icon={ThumbsUp}
+            title="Votes"
+            value={question.userUpvotes.length}
+          />
+
+          <MetricComponent
+            Icon={MessageCircle}
+            title="Answers"
+            value={question.userAnswers.length}
+          />
+
+          <MetricComponent Icon={Eye} title="Views" value={question.views} />
         </div>
       </div>
     </div>

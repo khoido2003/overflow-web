@@ -1,4 +1,10 @@
-import { Question, User, Tag } from "@prisma/client";
+import {
+  Question,
+  User,
+  Tag,
+  UserUpvotesQuestion,
+  UserAnswerQuestion,
+} from "@prisma/client";
 
 export interface CreateQuestionParams {
   title: string;
@@ -12,4 +18,6 @@ export type GetQuestion = Question & {
   tagOnQuestion: {
     tag: Tag;
   }[];
+  userUpvotes: UserDownVoteQuestion[];
+  userAnswers: UserAnswerQuestion[];
 };
