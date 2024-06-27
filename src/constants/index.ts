@@ -1,12 +1,13 @@
 import {
   Briefcase,
   CircleHelp,
+  Eye,
   Home,
   LucideIcon,
+  MessageCircle,
   StarIcon,
-  Stars,
-  StarsIcon,
   Tag,
+  ThumbsUp,
   User,
   Users,
 } from "lucide-react";
@@ -53,5 +54,27 @@ export const sidebarLinks: SidebarLink[] = [
     img: CircleHelp,
     route: "/ask-question",
     label: "Ask a question",
+  },
+];
+
+export const filterBarHomepage = [
+  { name: "Newest", value: "newest" },
+  { name: "Recommended", value: "recommended" },
+  { name: "Frequent", value: "frequent" },
+  { name: "Unanswered", value: "unanswered" },
+];
+
+export const Metric = [
+  {
+    title: "Votes",
+    Icon: ThumbsUp,
+  },
+  {
+    title: "Answers",
+    Icon: MessageCircle,
+  },
+  {
+    title: "Views",
+    Icon: Eye,
   },
 ];
