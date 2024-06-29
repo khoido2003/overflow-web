@@ -7,8 +7,8 @@ body {
   height: 100%;
   width: 100%;
 
+  scrollbar-color: #44475a #2d2a2e;
   scrollbar-width: none;
-  scrollbar-color: #40404000 #27272a00;
 }
 
 /* Draw line */
