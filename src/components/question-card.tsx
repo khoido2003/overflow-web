@@ -36,7 +36,10 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
 
       <div className="flex flex-col gap-4">
         {/* Link to user profile */}
-        <Link href={`/profile/${question.authorId}`} className="cursor-pointer">
+        <Link
+          href={`/profile/${question.author.id}`}
+          className="cursor-pointer"
+        >
           <div className="flex items-center justify-start gap-1">
             <Avatar className="h-6 w-6">
               <AvatarImage src={question.author.image!} className="" />

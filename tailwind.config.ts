@@ -29,6 +29,8 @@ const config = {
       },
 
       colors: {
+        whitePrimary: "#ffffff",
+        whiteSecondary: "#F4F6F8",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
