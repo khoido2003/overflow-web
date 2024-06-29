@@ -29,12 +29,11 @@ const config = {
       },
 
       colors: {
-<<<<<<< HEAD
         whitePrimary: "#ffffff",
         whiteSecondary: "#F4F6F8",
-=======
+
         main: "#DCE3F1",
->>>>>>> 4cfc443ffbd1a66db5b517c1afe0936ca70bccce
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
