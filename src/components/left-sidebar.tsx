@@ -123,7 +123,7 @@ export const LeftSidebar = () => {
             <Button
               className="w-full"
               variant="tertiary"
-              onClick={() => signOut()}
+              onClick={async () => await signOut()}
             >
               Sign Out
             </Button>
