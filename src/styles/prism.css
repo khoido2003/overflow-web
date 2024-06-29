@@ -1,0 +1,159 @@
+/* Base styles for code blocks */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #f8f8f2;
+  background: #2d2a2e;
+  text-shadow: none;
+  font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono",
+    monospace;
+  font-size: 1em;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  white-space: pre-wrap; /* Enable wrapping */
+  word-break: break-word; /* Break long words */
+  text-align: left;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"]::selection,
+pre[class*="language-"] ::selection,
+code[class*="language-"]::selection,
+code[class*="language-"] ::selection {
+  color: inherit;
+  background: #49483e;
+  text-shadow: none;
+}
+
+pre[class*="language-"] {
+  border: 1px solid #44475a;
+  border-radius: 5px;
+  padding: 1.5em 1em;
+  margin: 1em 0;
+  overflow: auto; /* Enable horizontal scrolling */
+  max-width: 100%;
+  max-height: 650px; /* Set maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Webkit-based browsers */
+pre[class*="language-"]::-webkit-scrollbar {
+  width: 12px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-track {
+  background: #2d2a2e;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background-color: #44475a;
+  border-radius: 10px;
+  border: 3px solid #2d2a2e;
+}
+
+/* Firefox */
+pre[class*="language-"] {
+  scrollbar-color: #44475a #2d2a2e;
+  scrollbar-width: thin;
+}
+
+:not(pre) > code[class*="language-"] {
+  color: #f8f8f2;
+  background: #44475a;
+  padding: 0.2em 0.3em;
+  border-radius: 0.2em;
+  box-decoration-break: clone;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #75715e;
+}
+
+.token.punctuation {
+  color: #f8f8f2;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.builtin,
+.token.inserted {
+  color: #a6e22e;
+}
+
+.token.string,
+.token.char {
+  color: #e6db74;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #f8f8f2;
+  background: transparent;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #f92672;
+}
+
+.token.function,
+.token.class-name {
+  color: #66d9ef;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #fd971f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  pre[class*="language-"] {
+    font-size: 0.9em;
+    padding: 1em;
+  }
+
+  code[class*="language-"] {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  pre[class*="language-"] {
+    font-size: 0.8em;
+    padding: 0.5em;
+  }
+
+  code[class*="language-"] {
+    font-size: 0.8em;
+  }
+}

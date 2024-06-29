@@ -4,6 +4,8 @@ import {
   Tag,
   UserUpvotesQuestion,
   UserAnswerQuestion,
+  UserDownVoteQuestion,
+  UserSavedQuestion,
 } from "@prisma/client";
 
 export interface CreateQuestionParams {
@@ -18,6 +20,8 @@ export type GetQuestion = Question & {
   tagOnQuestion: {
     tag: Tag;
   }[];
-  userUpvotes: UserDownVoteQuestion[];
+  userUpvotes: UserUpvotesQuestion[];
+  userDownvotes: UserDownVoteQuestion[];
   userAnswers: UserAnswerQuestion[];
+  userSavedQuestion: UserSavedQuestion[];
 };

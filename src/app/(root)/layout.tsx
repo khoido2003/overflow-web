@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
             <LeftSidebar />
 
             <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 font-inter sm:px-14">
-              <div className="mx-auto w-full max-w-5xl">{children}</div>
+              <div className="mx-auto w-full max-w-7xl">{children}</div>
             </section>
 
             <RightSidebar />

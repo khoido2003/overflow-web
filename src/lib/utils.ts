@@ -6,6 +6,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+//////////////////////////////////////////////////////////////
+
+// Format time
+
 const formatDistanceLocale = {
   lessThanXSeconds: "just now",
   xSeconds: "just now",
@@ -53,3 +57,18 @@ export function formatTimeToNow(date: Date): string {
     },
   });
 }
+
+//////////////////////////////////////////////////////
+
+// Format number counts
+export const formatAndDivideNumber = (num: number): string => {
+  if (num >= 1000000) {
+    const formattedNum = (num / 1000000).toFixed(1);
+    return `${formattedNum}M`;
+  } else if (num >= 1000) {
+    const formattedNum = (num / 1000).toFixed(1);
+    return `${formattedNum}K`;
+  } else {
+    return num.toString();
+  }
+};
