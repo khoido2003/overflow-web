@@ -7,7 +7,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { CircleHelp } from "lucide-react";
 
 import { filterBarHomepage } from "@/constants";
-import { auth } from "@/auth";
 import { Metadata } from "next";
 import { Feed } from "@/components/feed";
 

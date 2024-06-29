@@ -2,13 +2,11 @@
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button, buttonVariants } from "./ui/button";
-import { logOut } from "@/actions/logout";
-import { useEffect } from "react";
-import { toast } from "sonner";
+
 import {
   Tooltip,
   TooltipContent,
@@ -125,10 +123,7 @@ export const LeftSidebar = () => {
             <Button
               className="w-full"
               variant="tertiary"
-              onClick={async () => {
-                await logOut();
-                window.location.reload();
-              }}
+              onClick={() => signOut()}
             >
               Sign Out
             </Button>
