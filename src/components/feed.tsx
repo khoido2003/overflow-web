@@ -20,7 +20,6 @@ export const Feed = () => {
     data: questions,
     isFetching,
     isLoading,
-    isFetched,
   } = useQuery({
     queryKey: [
       "search-result",
