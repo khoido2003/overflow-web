@@ -13,7 +13,6 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <QueryProvider>
       <SessionProvider>

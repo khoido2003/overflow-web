@@ -111,3 +111,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.text-profile-secondary {
+  @apply text-2xl font-semibold text-whitePrimary;
+}
