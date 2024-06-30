@@ -25,3 +25,7 @@ export type GetQuestion = Question & {
   userAnswers: UserAnswerQuestion[];
   userSavedQuestion: UserSavedQuestion[];
 };
+
+export interface AnswerQuestionParams {
+  content: string;
+}

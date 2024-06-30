@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { ControllerRenderProps, useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
 import { useMutation } from "@tanstack/react-query";
@@ -28,19 +28,23 @@ import { Button } from "./ui/button";
 import { Loader2, Send, X } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface EditorComponentProps {
   type: string;
 }
 
 export const EditorComponent = ({ type }: EditorComponentProps) => {
+  // Create a ref to store the timeout ID so we an clear it later
+  const redirectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const { resolvedTheme } = useTheme();
   const editorRef = useRef(null);
 
+  const router = useRouter();
+
   // The current login user
   const session = useSession();
-
-  console.log(session.data?.user.token);
 
   // Declare form hook
   const form = useForm<AskQuestionPayload>({
@@ -72,7 +76,6 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
       });
 
       const data = await response.json();
-      console.log(data);
 
       return data;
     },
@@ -94,11 +97,32 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
           label: "Close",
           onClick: () => {
             toast.dismiss();
+            router.push("/");
           },
         },
       });
+
+      // Set the timeout and store the ID in the ref
+      redirectTimeoutRef.current = setTimeout(() => {
+        router.push("/");
+      }, 3000);
     },
   });
+
+  //  function to clear the timeout if needed
+  const clearRedirectTimeout = () => {
+    if (redirectTimeoutRef.current) {
+      clearTimeout(redirectTimeoutRef.current);
+      redirectTimeoutRef.current = null;
+    }
+  };
+
+  // Clear the timeout function
+  useEffect(() => {
+    return () => {
+      clearRedirectTimeout();
+    };
+  }, []);
 
   // Handle submit form to the database
   const onSubmit = (values: CreateQuestionParams) => {

@@ -9,8 +9,13 @@ export const AskQuestionValiadator = z.object({
   tags: z.array(z.string().min(1).max(15)).min(1),
 });
 
+export const AnswerQuestionValidator = z.object({
+  content: z.string().min(50),
+});
+
 ///////////////////////////
 
 // Types
 
 export type AskQuestionPayload = z.infer<typeof AskQuestionValiadator>;
+export type AnswerQuestionPayload = z.infer<typeof AnswerQuestionValidator>;
