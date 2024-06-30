@@ -18,9 +18,13 @@ import { CommentEditor } from "./comment-editor";
 
 interface CommentsSectionProps {
   comments: UserAnswerQuestion[];
+  questionId: string | number;
 }
 
-export const CommentsSection = ({ comments }: CommentsSectionProps) => {
+export const CommentsSection = ({
+  comments,
+  questionId,
+}: CommentsSectionProps) => {
   // Manipulate the url when choosing the filter
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -82,10 +86,10 @@ export const CommentsSection = ({ comments }: CommentsSectionProps) => {
       </div>
 
       {/* Comments List */}
-      <CommentsList comments={comments} />
+      <CommentsList questionId={questionId} comments={comments} />
 
       {/* Comment editor */}
-      <CommentEditor />
+      <CommentEditor questionId={questionId} />
     </div>
   );
 };

@@ -43,8 +43,6 @@ const Page = ({ params }: PageProps) => {
 
   const session = useSession();
 
-  console.log(question);
-
   if (isLoading || isFetching) return <QuestionDetailLoading />;
 
   // If the question is not valid or being deleted.
@@ -137,7 +135,7 @@ const Page = ({ params }: PageProps) => {
       <TagsList tags={question.tagOnQuestion} />
 
       {/* Show comments */}
-      <CommentsSection comments={question.userAnswers} />
+      <CommentsSection questionId={params.id} comments={question.userAnswers} />
     </div>
   );
 };

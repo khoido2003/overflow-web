@@ -1,11 +1,48 @@
+"use client";
+
+import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
 import { UserAnswerQuestion } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { CommentDetail } from "./comment-detail";
+import { GetAllAnswers } from "@/types/answer-question";
 
 interface CommentsListProps {
   comments: UserAnswerQuestion[];
+  questionId: string | number;
 }
 
-export const CommentsList = ({ comments }: CommentsListProps) => {
+export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
+  const session = useSession();
+
+  const {
+    data: answersList,
+    isPending,
+    isLoading,
+  } = useQuery({
+    queryKey: [questionId],
+    queryFn: async () => {
+      const response = await fetch(
+        `${API_REQUEST_PREFIX}/answers/${questionId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.data?.user.token}`,
+          },
+          body: JSON.stringify({
+            questionId,
+          }),
+        },
+      );
+      const data = await response.json();
+      return data.data as GetAllAnswers[];
+    },
+    staleTime: 0,
+    retry: 3,
+  });
+
   if (comments.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
@@ -24,5 +61,13 @@ export const CommentsList = ({ comments }: CommentsListProps) => {
     );
   }
 
-  return <div></div>;
+  if (isPending || isLoading) return <div>Loading....</div>;
+
+  return (
+    <div className="flex flex-col justify-center gap-8">
+      {answersList?.map((answer) => {
+        return <CommentDetail key={answer.id} answer={answer} />;
+      })}
+    </div>
+  );
 };

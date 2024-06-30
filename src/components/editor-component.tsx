@@ -105,7 +105,7 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
       // Set the timeout and store the ID in the ref
       redirectTimeoutRef.current = setTimeout(() => {
         router.push("/");
-      }, 3000);
+      }, 2000);
     },
   });
 

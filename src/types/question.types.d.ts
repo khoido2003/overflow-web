@@ -12,7 +12,7 @@ export interface CreateQuestionParams {
   title: string;
   content: string;
   tags: string[];
-  author?: id;
+  author?: string;
 }
 
 export type GetQuestion = Question & {
@@ -28,4 +28,6 @@ export type GetQuestion = Question & {
 
 export interface AnswerQuestionParams {
   content: string;
+  author?: string;
+  questionId?: string | number;
 }

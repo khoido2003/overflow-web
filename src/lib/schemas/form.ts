@@ -10,7 +10,7 @@ export const AskQuestionValiadator = z.object({
 });
 
 export const AnswerQuestionValidator = z.object({
-  content: z.string().min(50),
+  content: z.string().min(10),
 });
 
 ///////////////////////////
