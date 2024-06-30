@@ -2,47 +2,60 @@ import { CalendarDays, Link, MapPin } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import InfoLink from "./info-link";
+import { UserProfile } from "@/types/user-profile.types";
+import { formatTimeJoined, formatTimeToNow } from "@/lib/utils";
 
-const ProfileCard = () => {
+const ProfileCard = ({ user }: { user: UserProfile }) => {
   return (
-    <>
-      <div className="text-whiteSecondary flex items-center gap-5">
+    <div>
+      <div className="flex flex-col gap-3 text-whiteSecondary lg:flex-row lg:items-center lg:gap-5">
         <div>
           <Image
-            src="/assets/images/user-pro.png"
+            src={user.image || "/assets/images/user-pro.svg"}
             alt="Avatar Image"
             width={140}
             height={140}
+            className="h-[100px] w-[100px] rounded-full border-[3px] border-[#FF7000] object-center lg:h-[140px] lg:w-[140px]"
           />
         </div>
-        <div className="relative flex flex-col gap-5">
+        <div className="relative flex flex-col gap-3 lg:gap-5">
           <div>
-            <h1 className="text-whitePrimary text-3xl font-bold tracking-tight">
-              Sujata | JS Mastery
+            <h1 className="text-xl font-bold tracking-tight text-whitePrimary lg:text-3xl">
+              {user.name}
             </h1>
-            <p className="text-base font-normal text-[#7B8EC8]">@sujata</p>
+            {user.username && (
+              <p className="text-base font-normal text-purpleLink">
+                @{user.username}
+              </p>
+            )}
           </div>
 
-          <ul className="flex items-center gap-8">
-            <InfoLink
-              content="jsmastery"
-              icon={Link}
-              isLink
-              link="https://www.jsmastery.pro/"
-            />
+          <ul className="flex flex-wrap items-center gap-8">
+            {user.portfolioWebsite && (
+              <InfoLink
+                content={user.portfolioWebsite}
+                icon={Link}
+                isLink
+                link={user.portfolioWebsite}
+              />
+            )}
 
-            <InfoLink content="India" icon={MapPin} />
-            <InfoLink content="Joined 2 years ago" icon={CalendarDays} />
+            {user.location && (
+              <InfoLink content={user.location} icon={MapPin} />
+            )}
+            <InfoLink
+              content={`Joined ${formatTimeJoined(user.joinedAt as Date)}`}
+              icon={CalendarDays}
+            />
           </ul>
         </div>
       </div>
-
-      <p className="text-whiteSecondary m-5 max-w-3xl text-sm">
-        Launch your development career with project-based coaching - showcase
-        your skills with practical development experience and land the coding
-        career of your dreams. Check out jsmastery.pro
-      </p>
-    </>
+      {user.bio && (
+        <p className="m-5 max-w-3xl text-base text-whiteSecondary">
+          {user.bio}
+        </p>
+      )}
+    </div>
   );
 };
 

@@ -58,6 +58,13 @@ export function formatTimeToNow(date: Date): string {
   });
 }
 
+export function formatTimeJoined(date: Date) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+}
+
 //////////////////////////////////////////////////////
 
 // Format number counts

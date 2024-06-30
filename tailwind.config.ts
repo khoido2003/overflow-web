@@ -31,9 +31,8 @@ const config = {
       colors: {
         whitePrimary: "#ffffff",
         whiteSecondary: "#F4F6F8",
-
+        purpleLink: "#7B8EC8",
         main: "#DCE3F1",
-
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

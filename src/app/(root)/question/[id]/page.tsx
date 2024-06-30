@@ -14,6 +14,7 @@ import { formatTimeToNow } from "@/lib/utils";
 import { TagsList } from "./_components/tags-list";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { CommentsSection } from "./_components/comments-section";
 
 interface PageProps {
   params: {
@@ -41,8 +42,6 @@ const Page = ({ params }: PageProps) => {
   });
 
   const session = useSession();
-
-  console.log(question);
 
   if (isLoading || isFetching) return <QuestionDetailLoading />;
 
@@ -136,6 +135,7 @@ const Page = ({ params }: PageProps) => {
       <TagsList tags={question.tagOnQuestion} />
 
       {/* Show comments */}
+      <CommentsSection questionId={params.id} comments={question.userAnswers} />
     </div>
   );
 };

@@ -15,7 +15,7 @@ const InfoLink = ({ content, icon: Icon, isLink, link }: InfoLinkProps) => {
       <Link href={link} target="_blank">
         <li className="flex items-center gap-2">
           <span>
-            <Icon className="h-4 w-4 text-[#7B8EC8]" />
+            <Icon className="text-purpleLink h-4 w-4" />
           </span>
           {content}
         </li>
@@ -25,7 +25,7 @@ const InfoLink = ({ content, icon: Icon, isLink, link }: InfoLinkProps) => {
   return (
     <li className="flex items-center gap-2">
       <span>
-        <Icon className="h-4 w-4 text-[#7B8EC8]" />
+        <Icon className="text-purpleLink h-4 w-4" />
       </span>
       {content}
     </li>

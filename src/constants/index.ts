@@ -78,3 +78,22 @@ export const Metric = [
     Icon: Eye,
   },
 ];
+
+export const filterCommentsSection = [
+  {
+    name: "Highest Upvotes",
+    value: "highest-upvotes",
+  },
+  {
+    name: "Lowest Upvotes",
+    value: "lowest-upvotes",
+  },
+  {
+    name: "Most Recent",
+    value: "most-recent",
+  },
+  {
+    name: "Oldest",
+    value: "oldest",
+  },
+];
