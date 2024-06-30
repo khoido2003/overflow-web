@@ -15,12 +15,12 @@ const ProfileCard = ({ user }: { user: UserProfile }) => {
             alt="Avatar Image"
             width={140}
             height={140}
-            className="rounded-full border-[3px] border-[#FF7000] object-center"
+            className="h-[100px] w-[100px] rounded-full border-[3px] border-[#FF7000] object-center lg:h-[140px] lg:w-[140px]"
           />
         </div>
         <div className="relative flex flex-col gap-3 lg:gap-5">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-whitePrimary">
+            <h1 className="text-xl font-bold tracking-tight text-whitePrimary lg:text-3xl">
               {user.name}
             </h1>
             {user.username && (
