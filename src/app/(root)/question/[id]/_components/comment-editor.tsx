@@ -89,8 +89,8 @@ export const CommentEditor = ({ questionId }: CommentEditorProps) => {
 
       // Set the timeout and store the ID in the ref
       redirectTimeoutRef.current = setTimeout(() => {
-        router.push("/");
-      }, 2000);
+        window.location.reload();
+      }, 1000);
     },
   });
 

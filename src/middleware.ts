@@ -18,7 +18,9 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.some((route) =>
+    nextUrl.pathname.startsWith(nextUrl.pathname),
+  );
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   // If in login or register, then no redirect
@@ -36,7 +38,7 @@ export default auth((req) => {
 
   // User access protected route but did not login then redirect them to login page
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    // return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
   return null;

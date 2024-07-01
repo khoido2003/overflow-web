@@ -7,6 +7,6 @@ import {
 
 export type GetAllAnswers = UserAnswerQuestion & {
   user: User;
-  questionDownvotes: UserAnswerQuestionDownvotes;
-  questionUpvotes: UserAnswerQuestionUpvotes;
+  questionDownvotes: UserAnswerQuestionDownvotes[];
+  questionUpvotes: UserAnswerQuestionUpvotes[];
 };
