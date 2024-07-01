@@ -22,20 +22,28 @@ const StatsCard = ({
   return (
     <div
       className={cn(
-        "flex flex-1 items-center gap-4 rounded-xl border border-[#151821] bg-[#0F1117] p-8",
-        !isBadge && "justify-between",
+        "flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-4 md:p-6 lg:p-8",
+        !isBadge && "gap-5",
       )}
     >
       {/* Number of question && answer */}
       {!isBadge && (
         <>
           <div className="flex flex-col items-center">
-            <p className="text-2xl font-semibold">{questionCount}</p>
-            <p className="text-sm font-normal text-[#DCE3F1]">Questions</p>
+            <p className="text-2xl font-semibold text-[#0F1117] dark:text-whitePrimary">
+              {questionCount}
+            </p>
+            <p className="text-sm font-normal text-[#212734] dark:text-[#DCE3F1]">
+              Questions
+            </p>
           </div>
           <div className="flex flex-col items-center">
-            <p className="text-2xl font-semibold">{answerCount}</p>
-            <p className="text-sm font-normal text-[#DCE3F1]">Answer</p>
+            <p className="text-2xl font-semibold text-[#0F1117] dark:text-whitePrimary">
+              {answerCount}
+            </p>
+            <p className="text-sm font-normal text-[#212734] dark:text-[#DCE3F1]">
+              Answer
+            </p>
           </div>
         </>
       )}
@@ -45,8 +53,12 @@ const StatsCard = ({
         <>
           <Image src={icon as string} alt="test" width={50} height={50} />
           <div>
-            <p className="text-xl font-semibold">{badgeCount}</p>
-            <p className="text-sm font-normal text-[#DCE3F1]">{name}</p>
+            <p className="text-center text-xl font-semibold text-[#0F1117] dark:text-whitePrimary">
+              {badgeCount}
+            </p>
+            <p className="text-sm font-normal text-[#212734] dark:text-[#DCE3F1]">
+              {name}
+            </p>
           </div>
         </>
       )}

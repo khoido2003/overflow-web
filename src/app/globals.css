@@ -113,5 +113,9 @@ body {
 }
 
 .text-profile-secondary {
-  @apply text-2xl font-semibold text-whitePrimary;
+  @apply text-xl font-semibold text-[#0F1117] dark:text-whitePrimary lg:text-2xl;
+}
+
+.profile-link {
+  @apply text-[#1DA1F2] dark:text-purpleLink;
 }

@@ -4,10 +4,10 @@ import { UserProfile } from "@/types/user-profile.types";
 
 const ProfileStats = ({ user }: { user: UserProfile }) => {
   return (
-    <div className="my-5 flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold text-whitePrimary">Stats</h2>
+    <div className="my-10 flex flex-col gap-2 lg:gap-4">
+      <h2 className="text-profile-secondary">Stats</h2>
 
-      <div className="flex w-full flex-wrap items-stretch justify-between gap-5">
+      <div className="flex flex-col items-stretch justify-between gap-5 md:flex-row lg:gap-5">
         <StatsCard
           questionCount={
             user._count.questions > 999 ? "999+" : user._count.questions

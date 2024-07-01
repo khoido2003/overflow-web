@@ -8,6 +8,9 @@ import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
 import { UserProfile } from "@/types/user-profile.types";
 import { useSession } from "next-auth/react";
 import ProfileStats from "../_components/profile-stats";
+import UserProfileSkeleton from "../_components/user-profile-skeleton";
+import ProfileNotFound from "../_components/profile-not-found";
+import { Button } from "@/components/ui/button";
 
 interface PageProps {
   params: {
@@ -32,26 +35,22 @@ const ProfilePage = ({ params }: PageProps) => {
   });
 
   const session = useSession();
-  console.log(session);
 
-  if (isFetching || isLoading) return <div>Loading...</div>;
+  if (isFetching || isLoading) return <UserProfileSkeleton />;
 
-  if (!user) return <div>User not found</div>;
+  if (!user) return <ProfileNotFound />;
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between gap-3 border-b border-gray-300 pb-5 text-[#212734] dark:border-whiteSecondary dark:text-whiteSecondary lg:flex-row">
         <ProfileCard user={user} />
 
-        {/* {session.data?.user.id === user.id && <div>Button</div>} */}
+        {session.data?.user.id === user.id && <Button>Edit Profile</Button>}
       </div>
 
-      <div className="my-5 flex flex-col gap-4">
-        <ProfileStats user={user} />
-      </div>
+      <ProfileStats user={user} />
 
       <div className="mt-5 flex gap-10">
-        {/* POST ROW */}
         <div className="flex-[2]">
           <h2 className="text-profile-secondary my-4">Top Posts</h2>
           <div className="flex flex-col gap-6">
@@ -61,7 +60,6 @@ const ProfilePage = ({ params }: PageProps) => {
           </div>
         </div>
 
-        {/* TAG ROW */}
         <div className="flex-[1]">
           <h2 className="text-profile-secondary my-4">Top Tags</h2>
 
