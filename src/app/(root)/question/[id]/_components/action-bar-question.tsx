@@ -10,6 +10,7 @@ import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
 import { formatAndDivideNumber } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ActionBarProps {
   upvotesCount: number;
@@ -35,6 +36,12 @@ export const ActionBarQuestion = ({
 
   const router = useRouter();
 
+  const [hasUpvotedState, setHasUpvotedState] = useState(hasUpvoted);
+  const [hasDownvotedState, setHasDownvotedState] = useState(hasDownvoted);
+  const [upvotesCountState, setUpvotesCountState] = useState(upvotesCount);
+  const [downvotesCountState, setDownvotesCountState] =
+    useState(downvotesCount);
+
   const { mutate: upvoteQuestion, isPending: isUpvoting } = useMutation({
     mutationFn: async () => {
       const response = await fetch(`${API_REQUEST_PREFIX}/questions/upvotes`, {
@@ -53,7 +60,19 @@ export const ActionBarQuestion = ({
     },
     retry: 3,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["question", questionId] });
+      if (hasUpvotedState === true) {
+        setHasUpvotedState(false);
+        setUpvotesCountState((upvotesCountState) => upvotesCountState - 1);
+      } else {
+        setHasUpvotedState(true);
+        setUpvotesCountState((upvotesCountState) => upvotesCountState + 1);
+        if (hasDownvotedState === true) {
+          setHasDownvotedState(false);
+          setDownvotesCountState(
+            (downvotesCountState) => downvotesCountState - 1,
+          );
+        }
+      }
     },
     onError: () => {},
   });
@@ -79,7 +98,23 @@ export const ActionBarQuestion = ({
     },
     retry: 3,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["question", questionId] });
+      if (hasDownvotedState === true) {
+        setHasDownvotedState(false);
+        setDownvotesCountState(
+          (downvotesCountState) => downvotesCountState - 1,
+        );
+      } else {
+        setHasDownvotedState(true);
+        setDownvotesCountState(
+          (downvotesCountState) => downvotesCountState + 1,
+        );
+        if (hasUpvotedState === true) {
+          setHasUpvotedState(false);
+          setUpvotesCountState(
+            (downvotesCountState) => downvotesCountState - 1,
+          );
+        }
+      }
     },
     onError: () => {},
   });
@@ -106,7 +141,7 @@ export const ActionBarQuestion = ({
         >
           <Image
             src={
-              hasUpvoted
+              hasUpvotedState
                 ? "/assets/icons/upvoted.svg"
                 : "/assets/icons/upvote.svg"
             }
@@ -117,7 +152,7 @@ export const ActionBarQuestion = ({
           />
         </Button>
         <span className="flex aspect-square items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
-          {formatAndDivideNumber(upvotesCount)}
+          {formatAndDivideNumber(upvotesCountState)}
         </span>
       </div>
 
@@ -141,7 +176,7 @@ export const ActionBarQuestion = ({
         >
           <Image
             src={
-              hasDownvoted
+              hasDownvotedState
                 ? "/assets/icons/downvoted.svg"
                 : "/assets/icons/downvote.svg"
             }
@@ -152,7 +187,7 @@ export const ActionBarQuestion = ({
           />
         </Button>
         <span className="flex aspect-square items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
-          {formatAndDivideNumber(downvotesCount)}
+          {formatAndDivideNumber(downvotesCountState)}
         </span>
       </div>
 
