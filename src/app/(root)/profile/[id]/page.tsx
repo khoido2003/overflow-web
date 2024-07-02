@@ -1,12 +1,13 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+
+import { getUserInfo } from "@/actions/user.action";
+
 import { QuestionLoading } from "@/components/loading/question-loading";
 import ProfileCard from "../_components/profile-card";
-import StatsGroup from "../_components/stats-group";
-import { useQuery } from "@tanstack/react-query";
-import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
-import { UserProfile } from "@/types/user-profile.types";
-import { useSession } from "next-auth/react";
 import ProfileStats from "../_components/profile-stats";
 import UserProfileSkeleton from "../_components/user-profile-skeleton";
 import ProfileNotFound from "../_components/profile-not-found";
@@ -25,11 +26,7 @@ const ProfilePage = ({ params }: PageProps) => {
     isFetching,
   } = useQuery({
     queryKey: ["user", params.id],
-    queryFn: async () => {
-      const response = await fetch(`${API_REQUEST_PREFIX}/users/${params.id}`);
-      const data = await response.json();
-      return data.data as UserProfile;
-    },
+    queryFn: async () => await getUserInfo(params.id),
     staleTime: 0,
     retry: 3,
   });
@@ -43,12 +40,16 @@ const ProfilePage = ({ params }: PageProps) => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-between gap-3 border-b border-gray-300 pb-5 text-[#212734] dark:border-whiteSecondary dark:text-whiteSecondary lg:flex-row">
-        <ProfileCard user={user} />
+        <ProfileCard userInfo={user.userInfo} />
 
-        {session.data?.user.id === user.id && <Button>Edit Profile</Button>}
+        {session.data?.user.id === user.userInfo.id && (
+          <Button asChild>
+            <Link href="/profile/edit">Edit Profile</Link>
+          </Button>
+        )}
       </div>
 
-      <ProfileStats user={user} />
+      <ProfileStats userStats={user.userStats} badgeCounts={user.badgeCounts} />
 
       <div className="mt-5 flex gap-10">
         <div className="flex-[2]">

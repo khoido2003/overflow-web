@@ -1,21 +1,19 @@
-import { CalendarDays, Link, MapPin } from "lucide-react";
-import Image from "next/image";
 import React from "react";
-import InfoLink from "./info-link";
-import { UserProfile } from "@/types/user-profile.types";
+import Image from "next/image";
+import { User } from "@prisma/client";
+
+import { CalendarDays, Link, MapPin } from "lucide-react";
 import { formatTimeJoined } from "@/lib/utils";
 
-interface ProfileCardProps {
-  user: UserProfile;
-}
+import InfoLink from "./info-link";
 
-const ProfileCard = ({ user }: ProfileCardProps) => {
+const ProfileCard = ({ userInfo }: { userInfo: User }) => {
   return (
     <div>
       <div className="flex flex-col gap-3 text-[#212734] dark:text-whiteSecondary lg:flex-row lg:items-center lg:gap-5">
         <div>
           <Image
-            src={user.image || "/assets/images/user-pro.svg"}
+            src={userInfo.image || "/assets/images/user-pro.svg"}
             alt="Avatar Image"
             width={140}
             height={140}
@@ -25,37 +23,37 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
         <div className="relative flex flex-col gap-5 lg:gap-5">
           <div>
             <h1 className="text-xl font-bold tracking-tight text-[#0F1117] dark:text-whitePrimary lg:text-3xl">
-              {user.name}
+              {userInfo.name}
             </h1>
-            {user.username && (
+            {userInfo.username && (
               <p className="profile-link text-sm font-semibold lg:text-base">
-                @{user.username}
+                @{userInfo.username}
               </p>
             )}
           </div>
 
           <ul className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4 lg:gap-6">
-            {user.portfolioWebsite && (
+            {userInfo.portfolioWebsite && (
               <InfoLink
-                content={user.portfolioWebsite}
+                content={userInfo.portfolioWebsite}
                 icon={Link}
                 isLink
-                link={user.portfolioWebsite}
+                link={userInfo.portfolioWebsite}
               />
             )}
 
-            {user.location && (
-              <InfoLink content={user.location} icon={MapPin} />
+            {userInfo.location && (
+              <InfoLink content={userInfo.location} icon={MapPin} />
             )}
             <InfoLink
-              content={`Joined ${formatTimeJoined(user.joinedAt as Date)}`}
+              content={`Joined ${formatTimeJoined(userInfo.joinedAt as Date)}`}
               icon={CalendarDays}
             />
           </ul>
         </div>
       </div>
-      {user.bio && (
-        <p className="mt-5 max-w-3xl text-base lg:text-base">{user.bio}</p>
+      {userInfo.bio && (
+        <p className="mt-5 max-w-3xl text-base lg:text-base">{userInfo.bio}</p>
       )}
     </div>
   );

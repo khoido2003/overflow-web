@@ -8,7 +8,7 @@ const ProfileNotFound = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-3">
       <p className="text-lg font-semibold sm:text-2xl">
-        This question is not valid or no longer exists! 😥
+        This user is not valid or no longer exists! 😥
       </p>
 
       <Link href="/">
