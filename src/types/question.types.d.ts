@@ -30,4 +30,5 @@ export interface AnswerQuestionParams {
   content: string;
   author?: string;
   questionId?: string | number;
+  createdAt?: Date;
 }

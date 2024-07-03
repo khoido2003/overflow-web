@@ -21,7 +21,7 @@ export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
     isPending,
     isLoading,
   } = useQuery({
-    queryKey: [questionId],
+    queryKey: ["answer-list", questionId],
     queryFn: async () => {
       const response = await fetch(
         `${API_REQUEST_PREFIX}/answers/${questionId}`,

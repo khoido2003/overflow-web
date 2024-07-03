@@ -14,11 +14,19 @@ export default auth((req) => {
   // Current url
   const { nextUrl } = req;
 
+  if (nextUrl.pathname === "/") return null;
+
   // Check if there is a session token
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.some((route) => {
+    return nextUrl.pathname.startsWith(route);
+  });
+
+  // console.log(isPublicRoute);
+  // console.log(nextUrl.pathname);
+
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   // If in login or register, then no redirect

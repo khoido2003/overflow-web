@@ -1,20 +1,23 @@
 "use client";
 
-import { QuestionDetailLoading } from "@/components/loading/question-detail-loading";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
+import Image from "next/image";
+
 import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
 import { GetQuestion } from "@/types/question.types";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { ActionBar } from "./_components/action-bar";
-import { useSession } from "next-auth/react";
-import { DisplayHtml } from "@/components/display-html";
-import { Clock, Eye, MessageCircle } from "lucide-react";
 import { formatTimeToNow } from "@/lib/utils";
-import { TagsList } from "./_components/tags-list";
+import { Clock, Eye, MessageCircle } from "lucide-react";
+
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { DisplayHtml } from "@/components/display-html";
 import { CommentsSection } from "./_components/comments-section";
+import { QuestionDetailLoading } from "@/components/loading/question-detail-loading";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ActionBarQuestion } from "./_components/action-bar-question";
+import { TagsList } from "./_components/tags-list";
 
 interface PageProps {
   params: {
@@ -71,7 +74,10 @@ const Page = ({ params }: PageProps) => {
     <div className="flex w-full flex-col justify-center gap-5 font-inter">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
         {/* Author info */}
-        <div className="flex items-center justify-center gap-4">
+        <Link
+          href={`/profile/${question.authorId}`}
+          className="flex items-center justify-center gap-4"
+        >
           <Avatar className="h-8 w-8 bg-zinc-100">
             <AvatarImage src={question?.author.image as string} />
             <AvatarFallback>
@@ -88,17 +94,22 @@ const Page = ({ params }: PageProps) => {
           <p className="font-bold text-slate-600 dark:text-slate-400">
             {question?.author.name}{" "}
           </p>
-        </div>
+        </Link>
 
         {/* Action bar: upvote, downvote, bookmark */}
-        <ActionBar
+        <ActionBarQuestion
+          questionId={params.id}
           downvotesCount={question!.userDownvotes.length}
           upvotesCount={question!.userUpvotes.length}
           hasBookmarked={question!.userSavedQuestion.includes(
             session.data?.user.id,
           )}
-          hasDownvoted={question!.userDownvotes.includes(session.data?.user.id)}
-          hasUpvoted={question!.userUpvotes.includes(session.data?.user.id)}
+          hasDownvoted={question!.userDownvotes.some(
+            (downVote) => downVote.userId === session.data?.user.id,
+          )}
+          hasUpvoted={question!.userUpvotes.some(
+            (upVote) => upVote.userId === session.data?.user.id,
+          )}
         />
       </div>
 

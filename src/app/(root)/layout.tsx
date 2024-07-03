@@ -6,6 +6,7 @@ import { RightSidebar } from "@/components/right-sidebar";
 import { QueryProvider } from "@/context/query-provider";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { isRightNavHidden } from "@/lib/utils";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ const Layout = ({ children }: LayoutProps) => {
               <div className="mx-auto w-full max-w-7xl">{children}</div>
             </section>
 
-            {!pathname.startsWith("/profile") && <RightSidebar />}
+            {!isRightNavHidden(pathname) && <RightSidebar />}
           </div>
         </main>
       </SessionProvider>

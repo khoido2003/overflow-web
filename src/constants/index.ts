@@ -97,3 +97,33 @@ export const filterCommentsSection = [
     value: "oldest",
   },
 ];
+
+export const BADGE_CRITERIA = {
+  QUESTION_COUNT: {
+    BRONZE: 5,
+    SILVER: 10,
+    GOLD: 50,
+  },
+  ANSWER_COUNT: {
+    BRONZE: 5,
+    SILVER: 10,
+    GOLD: 50,
+  },
+  QUESTION_UPVOTES: {
+    BRONZE: 5,
+    SILVER: 10,
+    GOLD: 50,
+  },
+  ANSWER_UPVOTES: {
+    BRONZE: 5,
+    SILVER: 10,
+    GOLD: 50,
+  },
+  TOTAL_VIEWS: {
+    BRONZE: 10,
+    SILVER: 100,
+    GOLD: 1000,
+  },
+};
+
+export const RIGHT_SIDE_BAR_NOT_APPEAR = ["/profile", "tag", "/community"];

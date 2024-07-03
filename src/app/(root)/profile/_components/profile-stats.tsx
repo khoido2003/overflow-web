@@ -1,39 +1,40 @@
 import React from "react";
+
+import { BadgeCounts, UserStats } from "@/types/user-profile.types";
+
 import StatsCard from "./stats-card";
-import { UserProfile } from "@/types/user-profile.types";
 
-const ProfileStats = ({ user }: { user: UserProfile }) => {
+interface ProfileStatsProps {
+  userStats: UserStats;
+  badgeCounts: BadgeCounts;
+}
+
+const ProfileStats = ({ userStats, badgeCounts }: ProfileStatsProps) => {
   return (
-    <div className="my-5 flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold text-whitePrimary">Stats</h2>
+    <div className="my-10 flex flex-col gap-2 lg:gap-4">
+      <h2 className="text-profile-secondary">Stats</h2>
 
-      <div className="flex w-full flex-wrap items-stretch justify-between gap-5">
+      <div className="flex flex-col items-stretch justify-between gap-5 md:flex-row lg:gap-5">
         <StatsCard
-          questionCount={
-            user._count.questions > 999 ? "999+" : user._count.questions
-          }
-          answerCount={
-            user._count.answerQuestions > 999
-              ? "999+"
-              : user._count.answerQuestions
-          }
+          questionCount={userStats.totalQuestions}
+          answerCount={userStats.totalAnswers}
         />
 
         <StatsCard
           name="Gold Badge"
-          badgeCount={200}
+          badgeCount={badgeCounts.GOLD}
           icon="/assets/icons/gold-medal.svg"
           isBadge
         />
         <StatsCard
           name="Silver Badge"
-          badgeCount={19}
+          badgeCount={badgeCounts.SILVER}
           icon="/assets/icons/silver-medal.svg"
           isBadge
         />
         <StatsCard
           name="Bronze Badge"
-          badgeCount={123}
+          badgeCount={badgeCounts.BRONZE}
           icon="/assets/icons/bronze-medal.svg"
           isBadge
         />
