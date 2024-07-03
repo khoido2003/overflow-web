@@ -29,9 +29,6 @@ export const ActionBarQuestion = ({
   upvotesCount,
   questionId,
 }: ActionBarProps) => {
-  // Get QueryClient from the context
-  const queryClient = useQueryClient();
-
   const session = useSession();
 
   const router = useRouter();
@@ -74,7 +71,9 @@ export const ActionBarQuestion = ({
         }
       }
     },
-    onError: () => {},
+    onError: () => {
+      toast("Something went wrong! Try again later");
+    },
   });
 
   const { mutate: downvoteQuestion, isPending: isDownvoting } = useMutation({
@@ -116,7 +115,9 @@ export const ActionBarQuestion = ({
         }
       }
     },
-    onError: () => {},
+    onError: () => {
+      toast("Something went wrong! Try again later");
+    },
   });
 
   return (
@@ -151,7 +152,7 @@ export const ActionBarQuestion = ({
             className="cursor-pointer"
           />
         </Button>
-        <span className="flex aspect-square items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
+        <span className="flex aspect-square h-6 w-6 items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
           {formatAndDivideNumber(upvotesCountState)}
         </span>
       </div>
@@ -186,7 +187,7 @@ export const ActionBarQuestion = ({
             className="cursor-pointer"
           />
         </Button>
-        <span className="flex aspect-square items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
+        <span className="flex aspect-square h-6 w-6 items-center justify-center rounded-md bg-zinc-200 px-2 text-center dark:bg-zinc-700">
           {formatAndDivideNumber(downvotesCountState)}
         </span>
       </div>

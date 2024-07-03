@@ -7,7 +7,7 @@ export const ToggleSidebarMobile = () => {
   const { isOpen, onClose, onOpen } = useMobileSidebar();
 
   return (
-    <div onClick={() => onOpen()} className="block cursor-pointer sm:hidden">
+    <div onClick={() => onOpen()} className="block cursor-pointer md:hidden">
       <Menu className="h-7 w-7" />
     </div>
   );

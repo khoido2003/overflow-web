@@ -6,9 +6,9 @@ import { formatTimeToNow } from "@/lib/utils";
 import { GetAllAnswers } from "@/types/answer-question";
 import Image from "next/image";
 import { ActionBarAnswer } from "./action-bar-answer";
+import Link from "next/link";
 
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 
 interface CommentDetailProps {
   answer: GetAllAnswers;
@@ -51,11 +51,14 @@ export const CommentDetail = ({ answer }: CommentDetailProps) => {
 
         {/* Upvote/Downvote */}
         <ActionBarAnswer
+          answerId={answer.id}
           downvotesCount={answer.questionDownvotes.length}
-          hasDownvoted={answer.questionDownvotes.includes(
-            session?.data?.user.id,
+          hasDownvoted={answer.questionDownvotes.some(
+            (downvote) => downvote.userId === session?.data?.user.id,
           )}
-          hasUpvoted={answer.questionUpvotes.includes(session?.data?.user.id)}
+          hasUpvoted={answer.questionUpvotes.some(
+            (upvote) => upvote.userId === session?.data?.user.id,
+          )}
           upvotesCount={answer.questionUpvotes.length}
         />
       </div>
