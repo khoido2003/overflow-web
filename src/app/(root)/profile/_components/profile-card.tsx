@@ -13,7 +13,7 @@ const ProfileCard = ({ userInfo }: { userInfo: User }) => {
       <div className="flex flex-col gap-3 text-[#212734] dark:text-whiteSecondary lg:flex-row lg:items-center lg:gap-5">
         <div>
           <Image
-            src={userInfo.image || "/assets/images/user-pro.svg"}
+            src={userInfo.image || "/assets/images/user-pro.png"}
             alt="Avatar Image"
             width={140}
             height={140}

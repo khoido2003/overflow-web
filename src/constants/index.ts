@@ -125,3 +125,5 @@ export const BADGE_CRITERIA = {
     GOLD: 1000,
   },
 };
+
+export const RIGHT_SIDE_BAR_NOT_APPEAR = ["/profile", "tag", "/community"];

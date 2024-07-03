@@ -61,7 +61,7 @@ const ProfilePage = ({ params }: PageProps) => {
           </div>
         </div>
 
-        <div className="flex-[1]">
+        <div className="hidden flex-[1] lg:block">
           <h2 className="text-profile-secondary my-4">Top Tags</h2>
 
           <ul className="flex flex-col gap-4">

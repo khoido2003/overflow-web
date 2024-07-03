@@ -1,11 +1,11 @@
 import { BADGE_CRITERIA } from "@/constants";
 import { User } from "@prisma/client";
 
-export type UserProfile = User & {
-  _count: {
-    questions: number;
-    answerQuestions: number;
-  };
+export type UserSimple = {
+  id: string;
+  name: string;
+  username: string;
+  image: string;
 };
 
 export type UserStats = {

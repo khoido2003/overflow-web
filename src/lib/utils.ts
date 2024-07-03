@@ -2,8 +2,9 @@ import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
-import { BADGE_CRITERIA } from "@/constants";
+import { BADGE_CRITERIA, RIGHT_SIDE_BAR_NOT_APPEAR } from "@/constants";
 import { BadgeCounts } from "@/types/user-profile.types";
+import path from "path";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -83,6 +84,7 @@ export const formatAndDivideNumber = (num: number): string => {
 };
 
 //////////////////////////////////////////////////
+// Badge assignment
 interface BadgeParam {
   criteria: {
     type: keyof typeof BADGE_CRITERIA;
@@ -111,4 +113,12 @@ export const assignBadges = (params: BadgeParam) => {
   });
 
   return badgeCounts;
+};
+
+/////////////////////////////////////////////////
+export const isRightNavHidden = (pathname: string) => {
+  for (let path of RIGHT_SIDE_BAR_NOT_APPEAR) {
+    if (pathname.includes(path)) return true;
+  }
+  return false;
 };
