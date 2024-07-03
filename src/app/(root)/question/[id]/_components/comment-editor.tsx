@@ -2,9 +2,9 @@
 
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { AnswerQuestionParams } from "@/types/question.types";
 import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
@@ -17,22 +17,18 @@ import {
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "@/components/ui/button";
-import { string } from "zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 interface CommentEditorProps {
   questionId: string | number;
 }
 
 export const CommentEditor = ({ questionId }: CommentEditorProps) => {
-  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { resolvedTheme } = useTheme();
   const editorRef = useRef(null);
   const session = useSession();
-
-  // Create a ref to store the timeout ID so we an clear it later
-  const redirectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const form = useForm<AnswerQuestionPayload>({
     resolver: zodResolver(AnswerQuestionValidator),
@@ -77,37 +73,27 @@ export const CommentEditor = ({ questionId }: CommentEditorProps) => {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["answer-list", questionId],
+      });
+
+      form.setValue("content", "");
+      // Clear the TinyMCE editor content
+      if (editorRef.current) {
+        // @ts-ignore
+        editorRef.current.setContent("");
+      }
+
       toast.success("Successfully create answer!", {
         action: {
           label: "Close",
           onClick: () => {
             toast.dismiss();
-            router.refresh();
           },
         },
       });
-
-      // Set the timeout and store the ID in the ref
-      redirectTimeoutRef.current = setTimeout(() => {
-        window.location.reload();
-      }, 1000);
     },
   });
-
-  //  function to clear the timeout if needed
-  const clearRedirectTimeout = () => {
-    if (redirectTimeoutRef.current) {
-      clearTimeout(redirectTimeoutRef.current);
-      redirectTimeoutRef.current = null;
-    }
-  };
-
-  // Clear the timeout function
-  useEffect(() => {
-    return () => {
-      clearRedirectTimeout();
-    };
-  }, []);
 
   const onSubmit = ({ content }: AnswerQuestionParams) => {
     console.log("submit");
