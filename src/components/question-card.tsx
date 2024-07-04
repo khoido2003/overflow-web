@@ -21,7 +21,7 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
         <Link href={`/question/${question.id}`} className="cursor-pointer">
           <h3 className="line-clamp-1 text-xl font-bold">{question.title}</h3>
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {question.tagOnQuestion.map((item) => {
             return (
               <Link key={item.tag.id} href={`/tag/${item.tag.id}`}>
@@ -34,7 +34,7 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="mt-2 flex flex-wrap justify-between gap-4">
         {/* Link to user profile */}
         <Link
           href={`/profile/${question.author.id}`}
