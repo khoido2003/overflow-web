@@ -66,6 +66,14 @@ export const filterBarHomepage = [
 
 export const filterBarCommunity = [
   {
+    name: "Name",
+    value: "name",
+  },
+  {
+    name: "Highest Reputation",
+    value: "reputation",
+  },
+  {
     name: "Newest User",
     value: "new_users",
   },
@@ -73,28 +81,24 @@ export const filterBarCommunity = [
     name: "Oldest User",
     value: "old_users",
   },
-  {
-    name: "Highest Reputation",
-    value: "reputation",
-  },
 ];
 
 export const filterBarTag = [
-  {
-    name: "Popular",
-    value: "popular",
-  },
-  {
-    name: "Recent",
-    value: "recent",
-  },
   {
     name: "Name",
     value: "name",
   },
   {
-    name: "Old",
-    value: "old",
+    name: "Popular Tag",
+    value: "popular_tag",
+  },
+  {
+    name: "Recent Tag",
+    value: "recent_tag",
+  },
+  {
+    name: "Old tag",
+    value: "old_tag",
   },
 ];
 
