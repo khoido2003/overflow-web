@@ -15,7 +15,7 @@ const UserProfileSkeleton = () => {
                 alt="Avatar Image"
                 width={140}
                 height={140}
-                className="h-[100px] w-[100px] rounded-full border-[3px] border-primary object-center lg:h-[140px] lg:w-[140px]"
+                className="h-[100px] w-[100px] rounded-full border-[3px] border-primary object-center opacity-50 dark:opacity-100 lg:h-[140px] lg:w-[140px]"
               />
             </div>
             <div className="relative flex flex-col gap-5 lg:gap-5">

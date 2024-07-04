@@ -14,7 +14,7 @@ const ProfileStats = ({ userStats, badgeCounts }: ProfileStatsProps) => {
     <div className="my-10 flex flex-col gap-2 lg:gap-4">
       <h2 className="text-profile-secondary">Stats</h2>
 
-      <div className="flex flex-col items-stretch justify-between gap-5 md:flex-row lg:gap-5">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4 xl:gap-5">
         <StatsCard
           questionCount={userStats.totalQuestions}
           answerCount={userStats.totalAnswers}

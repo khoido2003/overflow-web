@@ -39,7 +39,7 @@ const ProfilePage = ({ params }: PageProps) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col justify-between gap-3 border-b border-gray-300 pb-5 text-[#212734] dark:border-whiteSecondary dark:text-whiteSecondary lg:flex-row">
+      <div className="flex justify-between gap-3 border-b border-gray-300 pb-5 text-[#212734] dark:border-whiteSecondary dark:text-whiteSecondary">
         <ProfileCard userInfo={user.userInfo} />
 
         {session.data?.user.id === user.userInfo.id && (

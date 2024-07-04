@@ -41,29 +41,30 @@ export const FilterBarMobile = ({ filters }: FilterBarMobileProps) => {
     router.push(url, { scroll: false });
   };
   return (
-    <div className="block md:hidden">
-      <Select
-        onValueChange={handleFilterClick}
-        defaultValue={paramsFilter || undefined}
-      >
-        <SelectTrigger className={cn("")}>
-          <div className="line-clamp-1 flex-1 text-left">
-            <SelectValue placeholder="Select a filter"></SelectValue>
-          </div>
-        </SelectTrigger>
+    <Select
+      onValueChange={handleFilterClick}
+      defaultValue={paramsFilter || undefined}
+    >
+      <SelectTrigger className="h-full gap-2 rounded-2xl border-[#DCE3F1] bg-[#F4F6F8] text-sm dark:border-[#151821] dark:bg-[#0F1117]">
+        <SelectValue placeholder="Select a filter" />
+      </SelectTrigger>
 
-        <SelectContent className="">
-          <SelectGroup>
-            {filters.map((item) => {
-              return (
-                <SelectItem value={item.value} key={item.name}>
-                  {item.name}
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+      <SelectContent
+        className="rounded-xl border-[#DCE3F1] bg-[#F4F6F8] text-sm dark:border-[#151821] dark:bg-[#0F1117]"
+        position="popper"
+      >
+        <SelectGroup>
+          {filters.map((filter) => (
+            <SelectItem
+              key={filter.value}
+              value={filter.value}
+              className="cursor-pointer"
+            >
+              {filter.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };

@@ -64,6 +64,40 @@ export const filterBarHomepage = [
   { name: "Unanswered", value: "unanswered" },
 ];
 
+export const filterBarCommunity = [
+  {
+    name: "Newest User",
+    value: "new_users",
+  },
+  {
+    name: "Oldest User",
+    value: "old_users",
+  },
+  {
+    name: "Highest Reputation",
+    value: "reputation",
+  },
+];
+
+export const filterBarTag = [
+  {
+    name: "Popular",
+    value: "popular",
+  },
+  {
+    name: "Recent",
+    value: "recent",
+  },
+  {
+    name: "Name",
+    value: "name",
+  },
+  {
+    name: "Old",
+    value: "old",
+  },
+];
+
 export const Metric = [
   {
     title: "Votes",
