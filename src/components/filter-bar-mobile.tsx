@@ -45,12 +45,12 @@ export const FilterBarMobile = ({ filters }: FilterBarMobileProps) => {
       onValueChange={handleFilterClick}
       defaultValue={paramsFilter || undefined}
     >
-      <SelectTrigger className="h-full gap-2 rounded-2xl border-[#DCE3F1] bg-[#F4F6F8] text-sm dark:border-[#151821] dark:bg-[#0F1117]">
+      <SelectTrigger className="h-14 gap-2 rounded-lg border-[#DCE3F1] bg-[#F4F6F8] p-4 text-sm dark:border-zinc-800 dark:bg-zinc-900">
         <SelectValue placeholder="Select a filter" />
       </SelectTrigger>
 
       <SelectContent
-        className="rounded-xl border-[#DCE3F1] bg-[#F4F6F8] text-sm dark:border-[#151821] dark:bg-[#0F1117]"
+        className="rounded-xl border-[#DCE3F1] bg-[#F4F6F8] text-sm dark:border-zinc-800 dark:bg-zinc-900"
         position="popper"
       >
         <SelectGroup>
