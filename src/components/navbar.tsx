@@ -18,7 +18,7 @@ export const Navbar = () => {
           </p>
         </Link>
 
-        <GlobalSearch />
+        {/* <GlobalSearch /> */}
 
         <div className="flex items-center justify-center gap-4">
           {/* Toggle dark/light mode */}

@@ -58,7 +58,7 @@ const UserProfileSkeleton = () => {
         <div className="h-4 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
 
         <div className="flex flex-col items-stretch justify-between gap-5 md:flex-row lg:gap-5">
-          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-4 md:p-6 lg:p-8">
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl bg-zinc-100 p-4 shadow-md dark:bg-zinc-900 md:gap-4 md:p-6 lg:p-8">
             <div className="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             <div className="flex flex-col items-center">
               <div className="mb-1 h-5 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
@@ -66,21 +66,21 @@ const UserProfileSkeleton = () => {
             </div>
           </div>
 
-          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-4 md:p-6 lg:p-8">
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl bg-zinc-100 p-4 shadow-md dark:bg-zinc-900 md:gap-4 md:p-6 lg:p-8">
             <div className="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             <div className="flex flex-col items-center">
               <div className="mb-1 h-5 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
               <div className="h-3 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             </div>
           </div>
-          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-4 md:p-6 lg:p-8">
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl bg-zinc-100 p-4 shadow-md dark:bg-zinc-900 md:gap-4 md:p-6 lg:p-8">
             <div className="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             <div className="flex flex-col items-center">
               <div className="mb-1 h-5 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
               <div className="h-3 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             </div>
           </div>
-          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-4 md:p-6 lg:p-8">
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-10 rounded-xl bg-zinc-100 p-4 shadow-md dark:bg-zinc-900 md:gap-4 md:p-6 lg:p-8">
             <div className="h-20 w-20 rounded-full bg-gray-200 dark:bg-gray-700"></div>
             <div className="flex flex-col items-center">
               <div className="mb-1 h-5 w-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>

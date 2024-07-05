@@ -1,18 +1,31 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import ProfileInfo from "./_components/profile-infor";
+import NoResult from "@/components/no-result";
+import UserQuestion from "./_components/user-question";
+import UserProfileSkeleton from "./_components/user-profile-skeleton";
 import { FilterBarMobile } from "@/components/filter-bar-mobile";
-import ProfileInfo from "../_components/profile-infor";
-import UserQuestion from "../_components/user-question";
 import { filterBarUserQuestion } from "@/constants";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+const Page = () => {
+  const session = useSession();
 
-const ProfilePage = ({ params }: PageProps) => {
+  if (session.status === "loading") return <UserProfileSkeleton />;
+
+  if (session.status === "unauthenticated")
+    return (
+      <NoResult
+        title="You’re not logged in!"
+        description="Please login to view your profile."
+        link="/auth/login"
+        linkTitle="Log In Now"
+      />
+    );
+
   return (
     <div className="flex flex-col">
-      <ProfileInfo userId={params.id} />
+      <ProfileInfo userId={session.data?.user.id} />
 
       <div className="mt-5 flex gap-10">
         <div className="flex-[2]">
@@ -22,8 +35,7 @@ const ProfilePage = ({ params }: PageProps) => {
               <FilterBarMobile filters={filterBarUserQuestion} />
             </div>
           </div>
-
-          <UserQuestion userId={params.id} />
+          <UserQuestion userId={session.data?.user.id} />
         </div>
 
         <div className="hidden flex-[1] lg:block">
@@ -55,4 +67,4 @@ const ProfilePage = ({ params }: PageProps) => {
   );
 };
 
-export default ProfilePage;
+export default Page;

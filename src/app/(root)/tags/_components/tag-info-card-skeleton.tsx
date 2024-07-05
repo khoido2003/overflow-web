@@ -2,7 +2,7 @@ import React from "react";
 
 const TagInfoCardSkeleton = () => {
   return (
-    <div className="flex flex-1 animate-pulse flex-col items-start gap-3 rounded-xl border border-[#C8CBD954] bg-white px-8 py-6 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:px-10 md:py-8">
+    <div className="flex flex-1 animate-pulse flex-col items-start gap-3 rounded-xl bg-zinc-100 px-8 py-6 shadow-md dark:bg-zinc-900 md:px-10 md:py-8">
       <div className="h-8 w-20 rounded-lg bg-gray-200 dark:bg-gray-500"></div>
 
       <div className="flex w-full items-center">

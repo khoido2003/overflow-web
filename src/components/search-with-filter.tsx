@@ -15,7 +15,7 @@ const SearchWithFilter = ({
   filterOptions,
 }: SearchWithFilterProps) => {
   return (
-    <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:gap-5">
+    <div className="flex w-full flex-row items-stretch gap-3">
       <div className="w-full lg:w-3/5">
         <LocalSearch placeholder={placeholder} />
       </div>

@@ -64,6 +64,12 @@ export const filterBarHomepage = [
   { name: "Unanswered", value: "unanswered" },
 ];
 
+export const filterBarUserQuestion = [
+  { name: "Newest", value: "newest" },
+  { name: "Most views", value: "most_views" },
+  { name: "Oldest", value: "oldest" },
+];
+
 export const filterBarCommunity = [
   {
     name: "Name",

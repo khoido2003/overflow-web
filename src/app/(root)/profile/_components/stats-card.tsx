@@ -22,7 +22,7 @@ const StatsCard = ({
   return (
     <div
       className={cn(
-        "flex items-center justify-center gap-10 rounded-xl border border-[#C8CBD954] bg-whitePrimary p-4 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:p-6 lg:p-8",
+        "flex items-center justify-center gap-10 rounded-xl bg-zinc-100 p-4 shadow-md dark:bg-zinc-900 md:p-6 lg:p-8",
       )}
     >
       {/* Number of question && answer */}

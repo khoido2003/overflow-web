@@ -8,6 +8,8 @@ import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
 import { QuestionLoading } from "@/components/loading/question-loading";
 import { QuestionCard } from "@/components/question-card";
 import NoResult from "@/components/no-result";
+import { LocalSearch } from "@/components/local-search";
+import { useSearchParams } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -16,14 +18,24 @@ interface PageProps {
 }
 
 const TagIdPage = ({ params }: PageProps) => {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("q") || "";
+  const page = searchParams.get("page") || "1";
+  const pageSize = searchParams.get("limit") || "10";
+
   const {
     data: tagOnQuestions,
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["tag", params.id],
+    queryKey: ["tag", params.id, searchParams.get("q")],
     queryFn: async () => {
-      const res = await fetch(`${API_REQUEST_PREFIX}/tags/${params.id}`);
+      const url = new URL(`${API_REQUEST_PREFIX}/tags/${params.id}`);
+      if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
+      if (page) url.searchParams.append("page", page);
+      if (pageSize) url.searchParams.append("limit", pageSize);
+
+      const res = await fetch(url.toString());
       const data = await res.json();
 
       return data.data as TagOnQuestion;
@@ -33,7 +45,8 @@ const TagIdPage = ({ params }: PageProps) => {
   if (isLoading || isFetching)
     return (
       <div className="animate-pulse">
-        <div className="mb-8 h-12 w-32 rounded-lg bg-gray-200 dark:bg-gray-500"></div>
+        <div className="mb-8 h-12 w-32 rounded-lg bg-zinc-200 dark:bg-zinc-900"></div>
+        <div className="mb-8 mt-4 h-10 w-full rounded-full bg-zinc-200 dark:bg-zinc-900 lg:w-3/5"></div>
         <div className="flex flex-col gap-4">
           <QuestionLoading />
           <QuestionLoading />
@@ -54,9 +67,15 @@ const TagIdPage = ({ params }: PageProps) => {
 
   return (
     <div>
-      <h2 className="mb-8 inline-block rounded-lg bg-zinc-200 px-6 py-3 text-2xl font-bold text-primary dark:bg-zinc-800">
+      <h2 className="inline-block rounded-lg text-3xl font-bold text-primary">
         {tagOnQuestions.tag.name}
       </h2>
+
+      <div className="mb-8 mt-4 lg:w-3/5">
+        <LocalSearch
+          placeholder={`Search for a question with "${tagOnQuestions.tag.name.toUpperCase()}" tag`}
+        />
+      </div>
 
       <div className="flex flex-col gap-5">
         {tagOnQuestions.questions.map((question) => {

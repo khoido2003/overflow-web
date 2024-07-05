@@ -3,7 +3,7 @@ import React from "react";
 
 const UserCardSkeleton = () => {
   return (
-    <div className="flex flex-1 animate-pulse flex-col items-center justify-between gap-3 rounded-xl border border-[#C8CBD954] bg-white px-8 py-6 shadow-md dark:border-[#151821] dark:bg-[#0F1117] md:gap-5 md:px-10 md:py-8">
+    <div className="flex flex-1 animate-pulse flex-col items-center justify-between gap-3 rounded-xl bg-zinc-100 px-8 py-6 shadow-md dark:bg-zinc-900 md:gap-5 md:px-10 md:py-8">
       <div className="flex flex-col items-center gap-2 md:gap-4">
         <Image
           src={"/assets/images/user.png"}
