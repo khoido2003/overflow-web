@@ -6,6 +6,7 @@ import { Metric } from "@/constants";
 import { MetricComponent } from "./metric";
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
+import TagCard from "./tag-card";
 
 interface QuestionCardProps {
   question: GetQuestion;
@@ -23,13 +24,7 @@ export const QuestionCard = ({ question }: QuestionCardProps) => {
         </Link>
         <div className="flex flex-wrap items-center gap-2">
           {question.tagOnQuestion.map((item) => {
-            return (
-              <Link key={item.tag.id} href={`/tag/${item.tag.id}`}>
-                <div className="rounded-lg bg-zinc-200/80 px-4 py-2 text-sm text-[#7B8EC8] dark:bg-zinc-800/60">
-                  {item.tag.name}
-                </div>
-              </Link>
-            );
+            return <TagCard key={item.tag.id} tag={item.tag} />;
           })}
         </div>
       </div>
