@@ -171,3 +171,26 @@ export const BADGE_CRITERIA = {
 };
 
 export const RIGHT_SIDE_BAR_NOT_APPEAR = ["/profile", "tag", "/community"];
+
+export const SearchType = [
+  {
+    name: "All",
+    type: null,
+  },
+  {
+    name: "Question",
+    type: "question",
+  },
+  {
+    name: "Answer",
+    type: "answer",
+  },
+  {
+    name: "Tag",
+    type: "tag",
+  },
+  {
+    name: "User",
+    type: "user",
+  },
+];
