@@ -1,6 +1,9 @@
 "use client";
 
-import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
+import {
+  API_REQUEST_PREFIX,
+  DEFAULT_QUESTION_FEED_SIZE,
+} from "@/constants/fetch-request";
 import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -8,6 +11,8 @@ import { QuestionCard } from "./question-card";
 import { useSearchParams } from "next/navigation";
 import { QuestionLoading } from "./loading/question-loading";
 import NoResult from "./no-result";
+import { useState } from "react";
+import PaginationBar from "./pagination-bar";
 
 export const Feed = () => {
   const session = useSession();
@@ -15,6 +20,12 @@ export const Feed = () => {
 
   const searchQuery = searchParams.get("q") || "";
   const filter = searchParams.get("filter") || "";
+
+  // PAGINATION
+  const pageParams = searchParams.get("page") || 1;
+  const pageSize = searchParams.get("pageSize") || DEFAULT_QUESTION_FEED_SIZE;
+  const [currPage, setCurrPage] = useState(+pageParams);
+  const [totalPage, setTotalPage] = useState<number>(1);
 
   const {
     data: questions,
@@ -25,11 +36,14 @@ export const Feed = () => {
       "search-result",
       searchParams.get("q"),
       searchParams.get("filter"),
+      currPage,
     ],
     queryFn: async () => {
       const url = new URL(`${API_REQUEST_PREFIX}/questions`);
       if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
       if (filter) url.searchParams.append("filter", filter);
+      if (currPage) url.searchParams.append("page", currPage.toString());
+      if (pageSize) url.searchParams.append("pageSize", pageSize.toString());
 
       const response = await fetch(url.toString(), {
         method: "GET",
@@ -41,9 +55,13 @@ export const Feed = () => {
 
       const data = await response.json();
 
+      // Calculate the total page
+      setTotalPage(Math.ceil(+data.results / +pageSize));
+
       return data.data as GetQuestion[];
     },
     staleTime: 0,
+    retry: 3,
   });
 
   // Update question views
@@ -69,6 +87,20 @@ export const Feed = () => {
     onSuccess: () => {},
     onError: () => {},
   });
+
+  const handleNextPage = () => {
+    setCurrPage((prev) => prev + 1);
+  };
+
+  const handlePrevPage = () => {
+    setCurrPage((prev) => prev - 1);
+  };
+
+  const handleSetPage = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPage) return;
+
+    setCurrPage(newPage);
+  };
 
   if (isFetching || isLoading || !questions)
     return (
@@ -101,6 +133,18 @@ export const Feed = () => {
           />
         );
       })}
+
+      {totalPage > 1 && (
+        <div className="my-5">
+          <PaginationBar
+            currPage={currPage}
+            totalPage={totalPage}
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            handleSetPage={handleSetPage}
+          />
+        </div>
+      )}
     </div>
   );
 };

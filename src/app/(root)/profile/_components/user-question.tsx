@@ -37,7 +37,7 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     queryKey: ["user-questions", userId, currPage, searchParams.get("filter")],
     queryFn: async () => {
       const url = new URL(`${API_REQUEST_PREFIX}/users/${userId}/questions`);
-      console.log(userId);
+
       if (filter) url.searchParams.append("filter", filter);
       if (currPage) url.searchParams.append("page", currPage.toString());
       if (pageSize) url.searchParams.append("pageSize", pageSize.toString());

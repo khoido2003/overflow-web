@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { CommentDetail } from "./comment-detail";
 import { GetAllAnswers } from "@/types/answer-question";
+import { Loader2 } from "lucide-react";
 
 interface CommentsListProps {
   comments: UserAnswerQuestion[];
@@ -20,6 +21,8 @@ export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
     data: answersList,
     isPending,
     isLoading,
+    isFetched,
+    isFetching,
   } = useQuery({
     queryKey: ["answer-list", questionId],
     queryFn: async () => {
@@ -43,7 +46,7 @@ export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
     retry: 3,
   });
 
-  if (comments.length === 0) {
+  if (isFetched && comments.length === 0 && answersList?.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <p className="text-lg text-slate-600 dark:text-slate-400">
@@ -61,7 +64,12 @@ export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
     );
   }
 
-  if (isPending || isLoading) return <div>Loading....</div>;
+  if (isPending || isLoading || isFetching)
+    return (
+      <div className="flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
 
   return (
     <div className="flex flex-col justify-center gap-8">

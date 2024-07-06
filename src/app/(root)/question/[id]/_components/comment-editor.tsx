@@ -77,7 +77,10 @@ export const CommentEditor = ({ questionId }: CommentEditorProps) => {
         queryKey: ["answer-list", questionId],
       });
 
-      form.setValue("content", "");
+      // form.setValue("content", "");
+      form.resetField("content");
+      form.clearErrors("content");
+
       // Clear the TinyMCE editor content
       if (editorRef.current) {
         // @ts-ignore
@@ -96,7 +99,17 @@ export const CommentEditor = ({ questionId }: CommentEditorProps) => {
   });
 
   const onSubmit = ({ content }: AnswerQuestionParams) => {
-    console.log("submit");
+    if (!session.data?.user) {
+      toast.error("Please login to answer questions!", {
+        action: {
+          label: "Close",
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+      });
+      return;
+    }
     const data: AnswerQuestionParams = {
       content,
       author: session.data?.user.id,

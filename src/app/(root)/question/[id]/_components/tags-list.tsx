@@ -9,7 +9,7 @@ interface TagListProps {
 
 export const TagsList = ({ tags }: TagListProps) => {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3">
       {tags.map((tag) => {
         return <TagCard key={tag.tag.id} tag={tag.tag} />;
       })}
