@@ -1,4 +1,5 @@
 import { ModeToggle } from "@/components/toggle-mode";
+import { Suspense } from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -6,13 +7,13 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="dark:bg-auth-dark bg-auth-light h-full bg-opacity-15 bg-cover bg-center bg-no-repeat">
+    <div className="h-full bg-opacity-15 bg-auth-light bg-cover bg-center bg-no-repeat dark:bg-auth-dark">
       <div className="fixed right-4 top-4">
         {" "}
         <ModeToggle />
       </div>
 
-      {children}
+      <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
     </div>
   );
 };
