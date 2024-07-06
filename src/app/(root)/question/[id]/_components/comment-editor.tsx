@@ -149,7 +149,7 @@ export const CommentEditor = ({ questionId }: CommentEditorProps) => {
 
                       skin: resolvedTheme === "dark" ? "oxide-dark" : "oxide",
                       content_css:
-                        resolvedTheme === "dark" ? "dark" : "default",
+                        resolvedTheme === "dark" ? "tinymce-5-dark" : "default",
                       height: 450,
                       menubar: true,
                       elementpath: false,
