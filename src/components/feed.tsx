@@ -11,7 +11,7 @@ import { QuestionCard } from "./question-card";
 import { useSearchParams } from "next/navigation";
 import { QuestionLoading } from "./loading/question-loading";
 import NoResult from "./no-result";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PaginationBar from "./pagination-bar";
 
 export const Feed = () => {
@@ -87,6 +87,10 @@ export const Feed = () => {
     onSuccess: () => {},
     onError: () => {},
   });
+
+  useEffect(() => {
+    setCurrPage(1);
+  }, [searchQuery, filter]);
 
   const handleNextPage = () => {
     setCurrPage((prev) => prev + 1);
