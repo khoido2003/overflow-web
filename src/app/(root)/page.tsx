@@ -42,7 +42,9 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
         <LocalSearch placeholder="Search for questions" />
 
         {/* Filter question in mobile/small screen: newest, recommended, frequent, unanswered */}
-        <FilterBarMobile filters={filterBarHomepage} />
+        <div className="block md:hidden">
+          <FilterBarMobile filters={filterBarHomepage} />
+        </div>
       </div>
 
       {/* Filter question in desktop/large screen: newest, recommended, frequent, unanswered  */}

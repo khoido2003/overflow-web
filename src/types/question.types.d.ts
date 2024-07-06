@@ -32,3 +32,7 @@ export interface AnswerQuestionParams {
   questionId?: string | number;
   createdAt?: Date;
 }
+
+export interface UpdateQuestionViews {
+  id: string;
+}

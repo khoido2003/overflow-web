@@ -53,12 +53,11 @@ export const LocalSearch = ({ placeholder }: LocalSearchProps) => {
   return (
     <div className="relative z-10 w-full flex-1">
       <Input
-        className={cn("py-4")}
+        className="relative h-14 rounded-lg border border-[#DCE3F1] bg-[#F4F6F8] p-4 pl-14 text-base dark:border-zinc-800 dark:bg-zinc-900"
         placeholder={placeholder}
         onChange={handleChange}
       />
-
-      <Search className="absolute right-3 top-[7px] h-6 w-6 text-gray-400" />
+      <Search className="absolute left-3 top-3 h-8 w-8 text-gray-400" />
     </div>
   );
 };

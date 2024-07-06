@@ -64,6 +64,50 @@ export const filterBarHomepage = [
   { name: "Unanswered", value: "unanswered" },
 ];
 
+export const filterBarUserQuestion = [
+  { name: "Newest", value: "newest" },
+  { name: "Most views", value: "most_views" },
+  { name: "Oldest", value: "oldest" },
+];
+
+export const filterBarCommunity = [
+  {
+    name: "Name",
+    value: "name",
+  },
+  {
+    name: "Highest Reputation",
+    value: "reputation",
+  },
+  {
+    name: "Newest User",
+    value: "new_users",
+  },
+  {
+    name: "Oldest User",
+    value: "old_users",
+  },
+];
+
+export const filterBarTag = [
+  {
+    name: "Name",
+    value: "name",
+  },
+  {
+    name: "Popular Tag",
+    value: "popular_tag",
+  },
+  {
+    name: "Recent Tag",
+    value: "recent_tag",
+  },
+  {
+    name: "Old tag",
+    value: "old_tag",
+  },
+];
+
 export const Metric = [
   {
     title: "Votes",
@@ -126,4 +170,32 @@ export const BADGE_CRITERIA = {
   },
 };
 
-export const RIGHT_SIDE_BAR_NOT_APPEAR = ["/profile", "tag", "/community"];
+export const RIGHT_SIDE_BAR_NOT_APPEAR = [
+  "/profile",
+  "tag",
+  "/community",
+  "/jobs",
+];
+
+export const SearchType = [
+  {
+    name: "All",
+    type: null,
+  },
+  {
+    name: "Question",
+    type: "question",
+  },
+  {
+    name: "Answer",
+    type: "answer",
+  },
+  {
+    name: "Tag",
+    type: "tag",
+  },
+  {
+    name: "User",
+    type: "user",
+  },
+];

@@ -261,7 +261,7 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
 
                       skin: resolvedTheme === "dark" ? "oxide-dark" : "oxide",
                       content_css:
-                        resolvedTheme === "dark" ? "dark" : "default",
+                        resolvedTheme === "dark" ? "tinymce-5-dark" : "default",
                       height: 450,
                       menubar: true,
                       elementpath: false,

@@ -4,12 +4,16 @@ import { filterBarHomepage } from "@/constants";
 import { Button } from "./ui/button";
 
 import qs from "query-string";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface FilterBarProps {}
 
 export const FilterBar = ({}: FilterBarProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const filter = searchParams.get("filter");
 
   const handleFilterClick = (value: string) => {
     const url = qs.stringifyUrl(
@@ -38,7 +42,12 @@ export const FilterBar = ({}: FilterBarProps) => {
             onClick={() => handleFilterClick(item.value)}
             key={item.value}
             variant="outline"
-            className="rounded-xl bg-zinc-100 dark:bg-zinc-900"
+            className={cn(
+              "rounded-xl bg-zinc-100 dark:bg-zinc-900",
+
+              filter === item.value &&
+                "bg-zinc-500 text-white dark:bg-zinc-300 dark:text-black",
+            )}
           >
             {item.value}
           </Button>
