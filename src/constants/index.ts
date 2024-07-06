@@ -170,7 +170,12 @@ export const BADGE_CRITERIA = {
   },
 };
 
-export const RIGHT_SIDE_BAR_NOT_APPEAR = ["/profile", "tag", "/community"];
+export const RIGHT_SIDE_BAR_NOT_APPEAR = [
+  "/profile",
+  "tag",
+  "/community",
+  "/jobs",
+];
 
 export const SearchType = [
   {
