@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { Navbar } from "@/components/navbar";
 import { LeftSidebar } from "@/components/left-sidebar";
 import { RightSidebar } from "@/components/right-sidebar";
@@ -19,16 +20,26 @@ const Layout = ({ children }: LayoutProps) => {
     <QueryProvider>
       <SessionProvider>
         <main className="relative m-auto">
-          <Navbar />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Navbar />
+          </Suspense>
 
           <div className="flex">
-            <LeftSidebar />
+            <Suspense fallback={<div>Loading...</div>}>
+              <LeftSidebar />
+            </Suspense>
 
             <section className="flex min-h-screen flex-1 flex-col px-6 pb-6 pt-36 font-inter sm:px-14">
-              <div className="mx-auto w-full max-w-7xl">{children}</div>
+              <div className="mx-auto w-full max-w-7xl">
+                <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+              </div>
             </section>
 
-            {!isRightNavHidden(pathname) && <RightSidebar />}
+            {!isRightNavHidden(pathname) && (
+              <Suspense fallback={<div>Loading...</div>}>
+                <RightSidebar />
+              </Suspense>
+            )}
           </div>
         </main>
       </SessionProvider>
