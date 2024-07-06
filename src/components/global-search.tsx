@@ -2,7 +2,6 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  ChangeEvent,
   ChangeEventHandler,
   Dispatch,
   SetStateAction,
@@ -10,33 +9,25 @@ import {
   useRef,
   useState,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@/hooks/use-debounce";
 
 import qs from "query-string";
 
 import {
-  CalendarIcon,
   CircleHelp,
   Filter,
   Loader2,
   MessageSquareCode,
-  RocketIcon,
-  Search,
   SearchIcon,
-  Sparkle,
   Sparkles,
   Tag,
   User,
 } from "lucide-react";
-import { FaceIcon } from "@radix-ui/react-icons";
 
 import {
   Command,
   CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
   CommandList,
   CommandSeparator,
 } from "./ui/command";
@@ -45,6 +36,8 @@ import { Input } from "./ui/input";
 import Link from "next/link";
 import { SearchType } from "@/constants";
 import { cn } from "@/lib/utils";
+import { UpdateQuestionViews } from "@/types/question.types";
+import { useSession } from "next-auth/react";
 
 // This is what we get from the server
 /*
@@ -273,6 +266,31 @@ function GlobalSearchItem({
   result: SearchResultType;
   setIsCommandOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const session = useSession();
+
+  const { mutate: updateQuestionViews } = useMutation({
+    mutationFn: async ({ id }: UpdateQuestionViews) => {
+      const response = await fetch(
+        `${API_REQUEST_PREFIX}/questions/views/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.data?.user.token}`,
+          },
+          body: JSON.stringify({}),
+        },
+      );
+
+      const data = await response.json();
+
+      return data;
+    },
+    retry: 3,
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
   let redirectLink = "";
   switch (result.type) {
     case "answer":
@@ -297,7 +315,13 @@ function GlobalSearchItem({
   }
 
   return (
-    <Link href={redirectLink} onClick={() => setIsCommandOpen(false)}>
+    <Link
+      href={redirectLink}
+      onClick={() => {
+        setIsCommandOpen(false);
+        updateQuestionViews({ id: result.id });
+      }}
+    >
       <div className="flex flex-col items-start justify-center gap-1">
         <div className="flex items-center justify-start gap-1">
           {result.type === "tag" && <Tag className="h-3 w-3" />}

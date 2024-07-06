@@ -2,19 +2,27 @@ import { formatTimeToNow } from "@/lib/utils";
 import { GetQuestion } from "@/types/question.types";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Metric } from "@/constants";
 import { MetricComponent } from "./metric";
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 import TagCard from "./tag-card";
+import React, { useEffect } from "react";
 
-interface QuestionCardProps {
+interface QuestionCardProps extends React.HTMLAttributes<HTMLDivElement> {
   question: GetQuestion;
 }
 
-export const QuestionCard = ({ question }: QuestionCardProps) => {
+export const QuestionCard = ({
+  question,
+  onClick,
+  ...props
+}: QuestionCardProps) => {
   return (
-    <div className="flex flex-col gap-6 rounded-lg bg-zinc-100 p-9 dark:bg-zinc-900 sm:px-11">
+    <div
+      {...props}
+      onClick={onClick}
+      className="flex flex-col gap-6 rounded-lg bg-zinc-100 p-9 dark:bg-zinc-900 sm:px-11"
+    >
       <div className="flex flex-col items-start gap-3">
         {/*  */}
 

@@ -87,7 +87,6 @@ const Page = ({ params }: PageProps) => {
                 fill
                 alt="User avatar"
               />
-              765rtdf
             </AvatarFallback>
           </Avatar>
 

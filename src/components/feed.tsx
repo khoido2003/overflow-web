@@ -1,8 +1,8 @@
 "use client";
 
 import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
-import { GetQuestion } from "@/types/question.types";
-import { useQuery } from "@tanstack/react-query";
+import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { QuestionCard } from "./question-card";
 import { useSearchParams } from "next/navigation";
@@ -46,6 +46,30 @@ export const Feed = () => {
     staleTime: 0,
   });
 
+  // Update question views
+  const { mutate: updateQuestionViews } = useMutation({
+    mutationFn: async ({ id }: UpdateQuestionViews) => {
+      const response = await fetch(
+        `${API_REQUEST_PREFIX}/questions/views/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.data?.user.token}`,
+          },
+          body: JSON.stringify({}),
+        },
+      );
+
+      const data = await response.json();
+
+      return data;
+    },
+    retry: 3,
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
   if (isFetching || isLoading || !questions)
     return (
       <div className="flex flex-col gap-4">
@@ -69,7 +93,13 @@ export const Feed = () => {
   return (
     <div className="flex flex-col gap-5">
       {questions.map((question: GetQuestion) => {
-        return <QuestionCard key={question.id} question={question} />;
+        return (
+          <QuestionCard
+            onClick={() => updateQuestionViews({ id: question.id })}
+            key={question.id}
+            question={question}
+          />
+        );
       })}
     </div>
   );
