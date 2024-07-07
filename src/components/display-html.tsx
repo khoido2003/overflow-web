@@ -36,5 +36,9 @@ export const DisplayHtml = ({ data }: DisplayHtmlProps) => {
     Prism.highlightAll();
   }, []);
 
-  return <div className="w-full max-w-full overflow-x-auto">{parse(data)}</div>;
+  return (
+    <div className="w-full max-w-[450px] overflow-x-auto sm:max-w-full">
+      {parse(data)}
+    </div>
+  );
 };

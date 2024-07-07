@@ -115,7 +115,7 @@ const Page = ({ params }: PageProps) => {
       <h2 className="text-3xl font-bold">{question!.title}</h2>
 
       {/* Show question infomation */}
-      <div className="mb-8 flex gap-8">
+      <div className="mb-8 flex flex-wrap gap-8">
         <div className="flex items-center justify-center gap-1">
           <Clock className="h-4 w-4 text-slate-600 dark:text-slate-400" />
           <p className="text-sm text-slate-600 dark:text-slate-400">

@@ -67,8 +67,12 @@ const TagIdPage = ({ params }: PageProps) => {
 
   return (
     <div>
-      <h2 className="inline-block rounded-lg text-3xl font-bold text-primary">
-        {tagOnQuestions.tag.name}
+      <h2 className="inline-block rounded-lg text-2xl font-bold text-primary">
+        <span className="text-black dark:text-white">Tag:</span>{" "}
+        <span className="rounded-lg bg-zinc-200 px-4 py-1 dark:bg-zinc-900">
+          {" "}
+          {tagOnQuestions.tag.name}
+        </span>
       </h2>
 
       <div className="mb-8 mt-4 lg:w-3/5">

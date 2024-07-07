@@ -16,3 +16,11 @@ export interface TagInfo {
     tagOnQuestion: number;
   };
 }
+
+export interface Top5TagsParams {
+  id: string;
+  name: string;
+  _count: {
+    tagOnQuestion: number;
+  };
+}

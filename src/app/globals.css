@@ -7,7 +7,7 @@ body {
   height: 100%;
   width: 100%;
 
-  scrollbar-color: #44475a #2d2a2e;
+  scrollbar-color: #44475ad6 #2d2a2e54;
   scrollbar-width: none;
 }
 
@@ -54,6 +54,11 @@ body {
 
 .active-link {
   @apply text-xs text-muted-foreground hover:font-semibold hover:text-foreground hover:underline;
+}
+
+.small-scrollbar {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: #44475ac5 #2d2a2e3a; /* thumb and track color */
 }
 
 @layer base {

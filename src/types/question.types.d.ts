@@ -36,3 +36,12 @@ export interface AnswerQuestionParams {
 export interface UpdateQuestionViews {
   id: string;
 }
+
+export interface GetTop5QuestionsParams {
+  id: string;
+  title: string;
+  views: number;
+  _count: {
+    userUpvotes: number;
+  };
+}
