@@ -8,6 +8,7 @@ import Image from "next/image";
 import { CommentDetail } from "./comment-detail";
 import { GetAllAnswers } from "@/types/answer-question";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 interface CommentsListProps {
   comments: UserAnswerQuestion[];
@@ -16,6 +17,9 @@ interface CommentsListProps {
 
 export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
   const session = useSession();
+  const searchParams = useSearchParams();
+
+  const filter = searchParams.get("filter");
 
   const {
     data: answersList,
@@ -24,21 +28,21 @@ export const CommentsList = ({ comments, questionId }: CommentsListProps) => {
     isFetched,
     isFetching,
   } = useQuery({
-    queryKey: ["answer-list", questionId],
+    queryKey: ["answer-list", questionId, filter],
     queryFn: async () => {
-      const response = await fetch(
-        `${API_REQUEST_PREFIX}/answers/${questionId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session.data?.user.token}`,
-          },
-          body: JSON.stringify({
-            questionId,
-          }),
+      const url = new URL(`${API_REQUEST_PREFIX}/answers/${questionId}`);
+      if (filter) url.searchParams.append("filter", filter);
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.data?.user.token}`,
         },
-      );
+        body: JSON.stringify({
+          questionId,
+        }),
+      });
       const data = await response.json();
       return data.data as GetAllAnswers[];
     },

@@ -15,6 +15,7 @@ import { UserAnswerQuestion } from "@prisma/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CommentsList } from "./comments-list";
 import { CommentEditor } from "./comment-editor";
+import { useEffect } from "react";
 
 interface CommentsSectionProps {
   comments: UserAnswerQuestion[];
