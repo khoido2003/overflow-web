@@ -10,23 +10,22 @@ import {
 } from "@/constants/fetch-request";
 
 import { QuestionCard } from "@/components/question-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QuestionLoading } from "@/components/loading/question-loading";
 import NoResult from "@/components/no-result";
 import PaginationBar from "@/components/pagination-bar";
+import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
 
 interface UserQuestionProps {
   userId: string;
 }
 
 const UserQuestion = ({ userId }: UserQuestionProps) => {
-  const searchParams = useSearchParams();
-  const pageParams = searchParams.get("page") || 1;
+  const { filter, pageParams, pageSize, searchParams } = useSearchParamsOptions(
+    { defaultPageSize: DEFAULT_QUESTION_PAGE_SIZE },
+  );
 
-  const pageSize = searchParams.get("pageSize") || DEFAULT_QUESTION_PAGE_SIZE;
-  const filter = searchParams.get("filter");
-
-  const [currPage, setCurrPage] = useState(+pageParams);
+  const [currPage, setCurrPage] = useState<number>(pageParams);
   const [totalPage, setTotalPage] = useState<number>(1);
 
   const {
@@ -49,6 +48,11 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
       return data.data as GetQuestion[];
     },
   });
+
+  // reset currPage to 1 when filter changes
+  useEffect(() => {
+    setCurrPage(1);
+  }, [filter]);
 
   const handleNextPage = () => {
     setCurrPage((prev) => prev + 1);

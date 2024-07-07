@@ -8,22 +8,16 @@ import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { QuestionCard } from "./question-card";
-import { useSearchParams } from "next/navigation";
 import { QuestionLoading } from "./loading/question-loading";
 import NoResult from "./no-result";
 import { useEffect, useState } from "react";
 import PaginationBar from "./pagination-bar";
+import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
 
 export const Feed = () => {
   const session = useSession();
-  const searchParams = useSearchParams();
-
-  const searchQuery = searchParams.get("q") || "";
-  const filter = searchParams.get("filter") || "";
-
-  // PAGINATION
-  const pageParams = searchParams.get("page") || 1;
-  const pageSize = searchParams.get("pageSize") || DEFAULT_QUESTION_FEED_SIZE;
+  const { searchQuery, filter, pageParams, pageSize, searchParams } =
+    useSearchParamsOptions({ defaultPageSize: DEFAULT_QUESTION_FEED_SIZE });
   const [currPage, setCurrPage] = useState(+pageParams);
   const [totalPage, setTotalPage] = useState<number>(1);
 

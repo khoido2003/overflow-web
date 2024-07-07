@@ -5,6 +5,8 @@
 export const API_REQUEST_PREFIX = "https://overflow-api.onrender.com/api/v1";
 
 export const DEFAULT_QUESTION_PAGE_SIZE = 5;
+export const DEFAULT_TAG_FEED_SIZE: number = 8;
+export const DEFAULT_COMMUNITY_PAGE_SIZE: number = 8;
 
 export const DEFAULT_QUESTION_FEED_SIZE = 10;
 
