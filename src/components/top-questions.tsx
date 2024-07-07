@@ -43,7 +43,7 @@ export const TopQuestions = () => {
       </div>
     );
   return (
-    <div className="mb-12 flex flex-col gap-5">
+    <div className="mb-4 flex flex-col gap-5">
       <h3 className="text-2xl font-bold">Top Questions</h3>
 
       <div className="flex flex-col gap-2">
