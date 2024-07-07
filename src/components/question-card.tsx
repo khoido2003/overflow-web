@@ -37,13 +37,13 @@ export const QuestionCard = ({
         </div>
       </div>
 
-      <div className="mt-2 flex flex-wrap justify-between gap-4">
+      <div className="mt-2 flex w-full flex-wrap justify-between gap-4">
         {/* Link to user profile */}
         <Link
           href={`/profile/${question.author.id}`}
           className="cursor-pointer"
         >
-          <div className="flex items-center justify-start gap-1">
+          <div className="flex flex-wrap items-center justify-start gap-1">
             <Avatar className="h-6 w-6">
               <AvatarImage src={question.author.image!} className="" />
               <AvatarFallback>
@@ -51,8 +51,8 @@ export const QuestionCard = ({
               </AvatarFallback>
             </Avatar>
             <p className="text-xs font-bold">{question.author.name}</p>
-            <span>•</span>
-            <p className="text-xs">
+            <span className="hidden sm:block">•</span>
+            <p className="hidden text-xs sm:block">
               asked {formatTimeToNow(question.createdAt)}
             </p>
           </div>
