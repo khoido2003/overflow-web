@@ -16,7 +16,7 @@ export const useSearchParamsOptions = ({
   const filter = searchParams.get("filter") || "";
 
   // PAGINATION
-  // const pageParams = searchParams.get("page") || 1;
+  //const pageParams = searchParams.get("page") || 1;
 
   // const pageSize = searchParams.get("pageSize") || defaultPageSize || 10;
 

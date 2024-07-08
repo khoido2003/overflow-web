@@ -1,50 +1,84 @@
 "use client";
 
-import { JOB_API_KEY, JOB_API_URL } from "@/constants/fetch-request";
+import { DEFAULT_JOB_PAGE_SIZE, JOB_API_URL } from "@/constants/fetch-request";
+import { Job } from "@/types/jobs";
 import { useQuery } from "@tanstack/react-query";
-import { encodeBase64 } from "bcryptjs";
-import { useState } from "react";
+import JobItem from "./job-item";
+import { useEffect, useState } from "react";
+import PaginationBar from "@/components/pagination-bar";
+import JobItemSkeleton from "./job-item-skeleton";
 
 const JobList = () => {
-  const [totalJob, setTotalJob] = useState<number>(0);
+  const [currPage, setCurrPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const auth = Buffer.from("94fe6c59-5354-4157-9e1e-371b7d967f9b").toString(
-    "base64",
-  );
+  const [jobsPaginate, setJobsPaginate] = useState<Job[]>([]);
 
-  const { data, isLoading, isFetching } = useQuery({
+  const {
+    data: jobs,
+    isLoading,
+    isFetching,
+  } = useQuery({
     queryKey: ["jobs"],
     queryFn: async () => {
-      console.log("first");
-      const res = await fetch(
-        "https://www.reed.co.uk/api/1.0/search?keywords=developer",
-        {
-          mode: "no-cors",
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Basic OTRmZTZjNTktNTM1NC00MTU3LTllMWUtMzcxYjdkOTY3ZjliOg==`,
-          },
-        },
-      );
+      const res = await fetch(JOB_API_URL);
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      console.log(res);
-
-      console.log("second");
       const data = await res.json();
-      setTotalJob(data.totalResults);
-      return data.results;
+
+      setTotalPages(Math.ceil(+data.jobCount / DEFAULT_JOB_PAGE_SIZE));
+
+      return data.jobs as Job[];
     },
   });
 
-  if (isLoading || isFetching) return <div>Loading...</div>;
+  useEffect(() => {
+    // Scroll to top when change page
+    window.scrollTo({ top: 0 });
 
-  return <div>JobList</div>;
+    const skip = (currPage - 1) * DEFAULT_JOB_PAGE_SIZE;
+    if (jobs) setJobsPaginate(jobs.slice(skip, skip + DEFAULT_JOB_PAGE_SIZE));
+  }, [currPage, jobs]);
+
+  if (isLoading || isFetching || !jobs || jobsPaginate.length === 0)
+    return (
+      <div className="flex flex-col gap-8">
+        <JobItemSkeleton />
+        <JobItemSkeleton />
+        <JobItemSkeleton />
+        <JobItemSkeleton />
+        <JobItemSkeleton />
+      </div>
+    );
+
+  const handleNextPage = () => {
+    setCurrPage((prev) => prev + 1);
+  };
+  const handlePrevPage = () => {
+    setCurrPage((prev) => prev - 1);
+  };
+  const handleSetPage = (page: number) => {
+    setCurrPage(page);
+  };
+
+  return (
+    <>
+      <div className="flex flex-col gap-8">
+        {jobsPaginate.map((job) => (
+          <JobItem key={job.id} job={job} />
+        ))}
+      </div>
+
+      <div className="my-5 md:my-10">
+        <PaginationBar
+          totalPage={totalPages}
+          currPage={currPage}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+          handleSetPage={handleSetPage}
+        />
+      </div>
+    </>
+  );
 };
 
 export default JobList;
