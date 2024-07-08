@@ -1,7 +1,11 @@
-import React from "react";
+import Link from "next/link";
 
 const EditProfile = () => {
-  return <div>EditProfile</div>;
+  return (
+    <div>
+      <Link href="/profile/edit/avatar">Edit image</Link>
+    </div>
+  );
 };
 
 export default EditProfile;

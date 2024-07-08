@@ -116,9 +116,24 @@ export const assignBadges = (params: BadgeParam) => {
 };
 
 /////////////////////////////////////////////////
+
 export const isRightNavHidden = (pathname: string) => {
   for (let path of RIGHT_SIDE_BAR_NOT_APPEAR) {
     if (pathname.includes(path)) return true;
   }
   return false;
+};
+
+/////////////////////////////////////////////////////
+
+// Generate image name before upload to bucket on Uploadthing
+export const generateRandomFileName = (extension: string): string => {
+  // Generate a random string
+  const randomString = Math.random().toString(36).substring(2, 15);
+
+  // Get current timestamp
+  const timestamp = Date.now();
+
+  // Create the file name with a random string and timestamp
+  return `${randomString}-${timestamp}${extension}`;
 };
