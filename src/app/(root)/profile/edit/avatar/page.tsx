@@ -56,7 +56,7 @@ const EditAvatar = () => {
 
   return (
     <Dialog open={isSubmit}>
-      <div className="flex flex-col gap-6">
+      <div className="flex h-full flex-col justify-center gap-6">
         <ImageUpload onSubmit={handleImageSubmit} />
       </div>
 

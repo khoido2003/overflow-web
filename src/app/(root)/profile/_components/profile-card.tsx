@@ -32,7 +32,7 @@ const ProfileCard = ({ userInfo }: { userInfo: User }) => {
             )}
           </div>
 
-          <ul className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-4 lg:gap-6">
+          <ul className="flex flex-col items-start gap-2 lg:gap-4 xl:flex-row xl:items-center">
             {userInfo.portfolioWebsite && (
               <InfoLink
                 content={userInfo.portfolioWebsite}
