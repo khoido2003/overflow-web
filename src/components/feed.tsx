@@ -33,7 +33,10 @@ export const Feed = () => {
       currPage,
     ],
     queryFn: async () => {
-      const url = new URL(`${API_REQUEST_PREFIX}/questions`);
+      const url =
+        filter === "recommended"
+          ? new URL(`${API_REQUEST_PREFIX}/questions/recommended`)
+          : new URL(`${API_REQUEST_PREFIX}/questions`);
       if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
       if (filter) url.searchParams.append("filter", filter);
       if (currPage) url.searchParams.append("page", currPage.toString());

@@ -91,7 +91,13 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
       });
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data.status === "error") {
+        toast.error(
+          "There is something wrong when create your question! Please try again later.",
+        );
+        return;
+      }
       toast.success("Successfully create question!", {
         action: {
           label: "Close",
