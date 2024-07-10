@@ -1,42 +1,43 @@
 "use client";
 
-import {
-  API_REQUEST_PREFIX,
-  DEFAULT_QUESTION_FEED_SIZE,
-} from "@/constants/fetch-request";
-import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { API_REQUEST_PREFIX } from "@/constants/fetch-request";
+import { GetBookmarkedQuestion } from "@/types/question.types";
+
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { QuestionCard } from "./question-card";
-import { QuestionLoading } from "./loading/question-loading";
-import NoResult from "./no-result";
 import { useEffect, useState } from "react";
-import PaginationBar from "./pagination-bar";
 import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
 
-export const Feed = () => {
+import { BoormarkedQuestionCard } from "./bookmarked-question-card";
+import NoResult from "@/components/no-result";
+import PaginationBar from "@/components/pagination-bar";
+import { QuestionLoading } from "@/components/loading/question-loading";
+export const BookmarkedQuestionList = () => {
   const session = useSession();
+
   const { searchQuery, filter, pageParams, pageSize, searchParams } =
-    useSearchParamsOptions({ defaultPageSize: DEFAULT_QUESTION_FEED_SIZE });
+    useSearchParamsOptions({ defaultPageSize: 5 });
+
   const [currPage, setCurrPage] = useState(+pageParams);
   const [totalPage, setTotalPage] = useState<number>(1);
 
   const {
-    data: questions,
+    data: bookmarkedQuestions,
+    isPending,
     isFetching,
     isLoading,
+    isFetched,
   } = useQuery({
     queryKey: [
-      "search-result",
+      "Bookmarked questions",
+      session.data?.user.id,
       searchParams.get("q"),
       searchParams.get("filter"),
       currPage,
     ],
     queryFn: async () => {
-      const url =
-        filter === "recommended"
-          ? new URL(`${API_REQUEST_PREFIX}/questions/recommended`)
-          : new URL(`${API_REQUEST_PREFIX}/questions`);
+      const url = new URL(`${API_REQUEST_PREFIX}/questions/bookmark`);
+
       if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
       if (filter) url.searchParams.append("filter", filter);
       if (currPage) url.searchParams.append("page", currPage.toString());
@@ -52,39 +53,14 @@ export const Feed = () => {
 
       const data = await response.json();
 
-      // Calculate the total page
       setTotalPage(Math.ceil(+data.results / +pageSize));
-
-      return data.data as GetQuestion[];
+      return data.data as GetBookmarkedQuestion[];
     },
+    retry: 3,
     staleTime: 0,
-    retry: 3,
   });
 
-  // Update question views
-  const { mutate: updateQuestionViews } = useMutation({
-    mutationFn: async ({ id }: UpdateQuestionViews) => {
-      const response = await fetch(
-        `${API_REQUEST_PREFIX}/questions/views/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session.data?.user.token}`,
-          },
-          body: JSON.stringify({}),
-        },
-      );
-
-      const data = await response.json();
-
-      return data;
-    },
-    retry: 3,
-    onSuccess: () => {},
-    onError: () => {},
-  });
-
+  // Reset page when search or filter
   useEffect(() => {
     setCurrPage(1);
   }, [searchQuery, filter]);
@@ -103,16 +79,17 @@ export const Feed = () => {
     setCurrPage(newPage);
   };
 
-  if (isFetching || isLoading || !questions)
+  if (isPending || isLoading || isFetching) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4 sm:items-stretch">
         <QuestionLoading />
         <QuestionLoading />
         <QuestionLoading />
       </div>
     );
+  }
 
-  if (questions.length === 0) {
+  if (bookmarkedQuestions && bookmarkedQuestions.length === 0) {
     return (
       <NoResult
         title="There’s no question to show"
@@ -124,13 +101,12 @@ export const Feed = () => {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      {questions.map((question: GetQuestion) => {
+    <div className="flex w-full flex-col gap-5">
+      {bookmarkedQuestions?.map((question) => {
         return (
-          <QuestionCard
-            onClick={() => updateQuestionViews({ id: question.id })}
-            key={question.id}
+          <BoormarkedQuestionCard
             question={question}
+            key={question.question.id}
           />
         );
       })}

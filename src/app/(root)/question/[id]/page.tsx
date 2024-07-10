@@ -100,8 +100,8 @@ const Page = ({ params }: PageProps) => {
           questionId={params.id}
           downvotesCount={question!.userDownvotes.length}
           upvotesCount={question!.userUpvotes.length}
-          hasBookmarked={question!.userSavedQuestion.includes(
-            session.data?.user.id,
+          hasBookmarked={question!.userSavedQuestion.some(
+            (bookmarked) => bookmarked.userId === session.data?.user.id,
           )}
           hasDownvoted={question!.userDownvotes.some(
             (downVote) => downVote.userId === session.data?.user.id,

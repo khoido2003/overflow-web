@@ -1,8 +1,8 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { GetQuestion } from "@/types/question.types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
 
 import {
   API_REQUEST_PREFIX,
@@ -10,23 +10,25 @@ import {
 } from "@/constants/fetch-request";
 
 import { QuestionCard } from "@/components/question-card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { QuestionLoading } from "@/components/loading/question-loading";
 import NoResult from "@/components/no-result";
 import PaginationBar from "@/components/pagination-bar";
+import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
+import { useSession } from "next-auth/react";
 
 interface UserQuestionProps {
   userId: string;
 }
 
 const UserQuestion = ({ userId }: UserQuestionProps) => {
-  const searchParams = useSearchParams();
-  const pageParams = searchParams.get("page") || 1;
+  const session = useSession();
 
-  const pageSize = searchParams.get("pageSize") || DEFAULT_QUESTION_PAGE_SIZE;
-  const filter = searchParams.get("filter");
+  const { filter, pageParams, pageSize, searchParams } = useSearchParamsOptions(
+    { defaultPageSize: DEFAULT_QUESTION_PAGE_SIZE },
+  );
 
-  const [currPage, setCurrPage] = useState(+pageParams);
+  const [currPage, setCurrPage] = useState<number>(pageParams);
   const [totalPage, setTotalPage] = useState<number>(1);
 
   const {
@@ -50,6 +52,35 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     },
   });
 
+  // Update question views
+  const { mutate: updateQuestionViews } = useMutation({
+    mutationFn: async ({ id }: UpdateQuestionViews) => {
+      const response = await fetch(
+        `${API_REQUEST_PREFIX}/questions/views/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.data?.user.token}`,
+          },
+          body: JSON.stringify({}),
+        },
+      );
+
+      const data = await response.json();
+
+      return data;
+    },
+    retry: 3,
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
+  // reset currPage to 1 when filter changes
+  useEffect(() => {
+    setCurrPage(1);
+  }, [filter]);
+
   const handleNextPage = () => {
     setCurrPage((prev) => prev + 1);
   };
@@ -64,7 +95,7 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     setCurrPage(newPage);
   };
 
-  if (isLoading || isFetching)
+  if (isLoading || isFetching || !session)
     return (
       <div className="flex flex-col gap-4">
         <QuestionLoading />
@@ -87,7 +118,11 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     <div>
       <div className="flex flex-col gap-4">
         {questions.map((question) => (
-          <QuestionCard key={question.id} question={question} />
+          <QuestionCard
+            onClick={() => updateQuestionViews({ id: question.id })}
+            key={question.id}
+            question={question}
+          />
         ))}
       </div>
 

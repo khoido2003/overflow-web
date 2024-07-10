@@ -90,7 +90,7 @@ export const UserAvatar = () => {
             </DropdownMenuItem>
           </Link>
 
-          <Link href="/settings">
+          <Link href="/profile/edit">
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>

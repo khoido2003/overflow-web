@@ -23,3 +23,16 @@ export interface BadgeCounts {
 }
 
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;
+
+export type UserProfile = {
+  id: string;
+  name: string;
+  email: string;
+  username: string;
+  image: string;
+  bio: string;
+  location: string;
+  portfolioWebsite: string;
+  reputation: number;
+  joinedAt: Date;
+};

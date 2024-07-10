@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect, useRef } from "react";
 import { ControllerRenderProps, useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
 import { Input } from "./ui/input";
@@ -91,7 +91,13 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
       });
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data.status === "error") {
+        toast.error(
+          "There is something wrong when create your question! Please try again later.",
+        );
+        return;
+      }
       toast.success("Successfully create question!", {
         action: {
           label: "Close",
@@ -246,8 +252,23 @@ export const EditorComponent = ({ type }: EditorComponentProps) => {
                       editorRef.current = editor;
                     }}
                     init={{
-                      plugins:
-                        "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown",
+                      plugins: [
+                        "advlist",
+                        "autolink",
+                        "lists",
+                        "link",
+                        "image",
+                        "charmap",
+                        "preview",
+                        "anchor",
+                        "searchreplace",
+                        "visualblocks",
+                        "codesample",
+                        "fullscreen",
+                        "insertdatetime",
+                        "media",
+                        "table",
+                      ],
                       toolbar:
                         "undo redo | " +
                         "codesample | bold italic forecolor | alignleft aligncenter |" +

@@ -1,19 +1,21 @@
 import { formatTimeToNow } from "@/lib/utils";
-import { GetQuestion } from "@/types/question.types";
+import { GetBookmarkedQuestion } from "@/types/question.types";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { MetricComponent } from "./metric";
+
 import { Eye, MessageCircle, ThumbsUp } from "lucide-react";
 import Link from "next/link";
-import TagCard from "./tag-card";
-import React, { useEffect } from "react";
+
+import React from "react";
+import TagCard from "@/components/tag-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MetricComponent } from "@/components/metric";
 
 interface QuestionCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  question: GetQuestion;
+  question: GetBookmarkedQuestion;
   isBookmarked?: boolean;
 }
 
-export const QuestionCard = ({
+export const BoormarkedQuestionCard = ({
   question,
   isBookmarked,
   onClick,
@@ -29,11 +31,28 @@ export const QuestionCard = ({
         {/*  */}
 
         {/* Link to detail question by Id */}
-        <Link href={`/question/${question.id}`} className="cursor-pointer">
-          <h3 className="line-clamp-1 text-xl font-bold">{question.title}</h3>
-        </Link>
+
+        <div className="flex w-full items-center justify-between">
+          <Link
+            href={`/question/${question.question.id}`}
+            className="block cursor-pointer"
+          >
+            <h3 className="line-clamp-1 text-xl font-bold">
+              {question.question.title}
+            </h3>
+          </Link>
+
+          <Image
+            src="/assets/icons/star-filled.svg"
+            width={17}
+            height={17}
+            alt="bookmarked"
+            className="block"
+          />
+        </div>
+
         <div className="flex flex-wrap items-center gap-2">
-          {question.tagOnQuestion.map((item) => {
+          {question.question.tagOnQuestion.map((item) => {
             return <TagCard key={item.tag.id} tag={item.tag} />;
           })}
         </div>
@@ -42,20 +61,20 @@ export const QuestionCard = ({
       <div className="mt-2 flex w-full flex-wrap justify-between gap-4">
         {/* Link to user profile */}
         <Link
-          href={`/profile/${question.author.id}`}
+          href={`/profile/${question.question.author.id}`}
           className="cursor-pointer"
         >
           <div className="flex flex-wrap items-center justify-start gap-1">
             <Avatar className="h-6 w-6">
-              <AvatarImage src={question.author.image!} className="" />
+              <AvatarImage src={question.question.author.image!} className="" />
               <AvatarFallback>
                 <Image src="/assets/images/user.png" fill alt="User avatar" />
               </AvatarFallback>
             </Avatar>
-            <p className="text-xs font-bold">{question.author.name}</p>
+            <p className="text-xs font-bold">{question.question.author.name}</p>
             <span className="hidden sm:block">•</span>
             <p className="hidden text-xs sm:block">
-              asked {formatTimeToNow(question.createdAt)}
+              asked {formatTimeToNow(question.question.createdAt)}
             </p>
           </div>
         </Link>
@@ -65,18 +84,22 @@ export const QuestionCard = ({
           <MetricComponent
             Icon={ThumbsUp}
             title="Votes"
-            value={question.userUpvotes.length}
+            value={question.question._count.userUpvotes}
           />
 
           {/* Comments count */}
           <MetricComponent
             Icon={MessageCircle}
             title="Answers"
-            value={question.userAnswers.length}
+            value={question.question._count.userAnswers}
           />
 
           {/* View counts */}
-          <MetricComponent Icon={Eye} title="Views" value={question.views} />
+          <MetricComponent
+            Icon={Eye}
+            title="Views"
+            value={question.question.views}
+          />
         </div>
       </div>
     </div>

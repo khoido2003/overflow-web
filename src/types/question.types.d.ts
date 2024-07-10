@@ -45,3 +45,20 @@ export interface GetTop5QuestionsParams {
     userUpvotes: number;
   };
 }
+
+export interface GetBookmarkedQuestion {
+  question: {
+    id: string;
+    _count: {
+      userUpvotes: number;
+      userAnswers: number;
+    };
+    author: User;
+    createdAt: Date;
+    tagOnQuestion: {
+      tag: Tag;
+    }[];
+    title: string;
+    views: number;
+  };
+}

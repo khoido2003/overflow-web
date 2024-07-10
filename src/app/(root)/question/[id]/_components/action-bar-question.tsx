@@ -33,12 +33,19 @@ export const ActionBarQuestion = ({
 
   const router = useRouter();
 
+  // Upvote question state
   const [hasUpvotedState, setHasUpvotedState] = useState(hasUpvoted);
-  const [hasDownvotedState, setHasDownvotedState] = useState(hasDownvoted);
   const [upvotesCountState, setUpvotesCountState] = useState(upvotesCount);
+
+  // Downvote question state
+  const [hasDownvotedState, setHasDownvotedState] = useState(hasDownvoted);
   const [downvotesCountState, setDownvotesCountState] =
     useState(downvotesCount);
 
+  // Bookmark question state
+  const [bookmarkState, setBookmarkState] = useState(hasBookmarked);
+
+  // Upvote question
   const { mutate: upvoteQuestion, isPending: isUpvoting } = useMutation({
     mutationFn: async () => {
       const response = await fetch(`${API_REQUEST_PREFIX}/questions/upvotes`, {
@@ -76,6 +83,7 @@ export const ActionBarQuestion = ({
     },
   });
 
+  // Downvote question
   const { mutate: downvoteQuestion, isPending: isDownvoting } = useMutation({
     mutationFn: async () => {
       const response = await fetch(
@@ -117,6 +125,40 @@ export const ActionBarQuestion = ({
     },
     onError: () => {
       toast("Something went wrong! Try again later");
+    },
+  });
+
+  // Bookmark question
+  const { mutate: bookmark, isPending } = useMutation({
+    mutationFn: async () => {
+      const response = await fetch(`${API_REQUEST_PREFIX}/questions/bookmark`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.data?.user.token}`,
+        },
+        body: JSON.stringify({
+          questionId,
+          userId: session.data?.user.id,
+        }),
+      });
+
+      const data = await response.json();
+      return data.message;
+    },
+
+    retry: 3,
+
+    onError: () => {
+      toast.error(
+        "An error occurred while trying to bookmark question! Try again later.",
+      );
+    },
+
+    onSuccess: () => {
+      if (bookmarkState === true) {
+        setBookmarkState(false);
+      } else setBookmarkState(true);
     },
   });
 
@@ -194,7 +236,7 @@ export const ActionBarQuestion = ({
 
       <Image
         src={
-          hasBookmarked
+          bookmarkState
             ? "/assets/icons/star-filled.svg"
             : "/assets/icons/star-red.svg"
         }
@@ -202,6 +244,7 @@ export const ActionBarQuestion = ({
         height={18}
         alt="star"
         className="cursor-pointer"
+        onClick={() => bookmark()}
       />
     </div>
   );
