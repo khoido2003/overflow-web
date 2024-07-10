@@ -108,6 +108,17 @@ export const filterBarTag = [
   },
 ];
 
+export const filterCollections = [
+  {
+    name: "Oldest",
+    value: "oldest",
+  },
+  {
+    name: "Newest",
+    value: "newest",
+  },
+];
+
 export const Metric = [
   {
     title: "Votes",
