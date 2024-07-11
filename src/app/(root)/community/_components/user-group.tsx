@@ -37,6 +37,7 @@ const UserGroup = () => {
     queryFn: async () => {
       const url = new URL(`${API_REQUEST_PREFIX}/users`);
 
+      if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
       if (filter) url.searchParams.append("filter", filter);
       if (currPage) url.searchParams.append("page", currPage.toString());
       if (pageSize) url.searchParams.append("pageSize", pageSize.toString());
@@ -54,7 +55,7 @@ const UserGroup = () => {
   // reset currPage to 1 when filter changes
   useEffect(() => {
     setCurrPage(1);
-  }, [filter]);
+  }, [filter, searchQuery]);
 
   const handleNextPage = () => {
     setCurrPage((prev) => prev + 1);

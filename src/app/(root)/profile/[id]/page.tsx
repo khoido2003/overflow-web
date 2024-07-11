@@ -2,6 +2,7 @@ import { FilterBarMobile } from "@/components/filter-bar-mobile";
 import ProfileInfo from "../_components/profile-infor";
 import UserQuestion from "../_components/user-question";
 import { filterBarUserQuestion } from "@/constants";
+import UserTag from "../_components/user-tag";
 
 interface PageProps {
   params: {
@@ -27,28 +28,7 @@ const ProfilePage = ({ params }: PageProps) => {
         </div>
 
         <div className="hidden flex-[1] lg:block">
-          <h2 className="text-profile-secondary my-4">Top Tags</h2>
-
-          <ul className="flex flex-col gap-4">
-            <li className="flex items-center justify-between">
-              <p className="rounded-lg bg-zinc-200/80 px-4 py-2 text-sm text-[#7B8EC8] dark:bg-zinc-800/60">
-                JavaScript
-              </p>
-              <p className="text-sm text-[#DCE3F1]">999</p>
-            </li>
-            <li className="flex items-center justify-between">
-              <p className="rounded-lg bg-zinc-200/80 px-4 py-2 text-sm text-[#7B8EC8] dark:bg-zinc-800/60">
-                JavaScript
-              </p>
-              <p className="text-sm text-[#DCE3F1]">999</p>
-            </li>
-            <li className="flex items-center justify-between">
-              <p className="rounded-lg bg-zinc-200/80 px-4 py-2 text-sm text-[#7B8EC8] dark:bg-zinc-800/60">
-                JavaScript
-              </p>
-              <p className="text-sm text-[#DCE3F1]">999</p>
-            </li>
-          </ul>
+          <UserTag userId={params.id} />
         </div>
       </div>
     </div>

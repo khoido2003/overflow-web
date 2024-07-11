@@ -1,5 +1,6 @@
 import { number } from "zod";
 import { GetQuestion } from "./question.types";
+import { Tag } from "@prisma/client";
 
 export interface TagOnQuestion {
   tag: Tag;
@@ -24,3 +25,7 @@ export interface Top5TagsParams {
     tagOnQuestion: number;
   };
 }
+
+export type TopUserTag = Tag & {
+  count: number;
+};
