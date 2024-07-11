@@ -122,6 +122,7 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
             onClick={() => updateQuestionViews({ id: question.id })}
             key={question.id}
             question={question}
+            isEdited={true}
           />
         ))}
       </div>
