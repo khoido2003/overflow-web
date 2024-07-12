@@ -24,6 +24,8 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { DeleteAccount } from "../_components/delete-account";
+import { useRouter } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -36,6 +38,12 @@ const Page = ({ params }: PageProps) => {
 
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
   const [toggleOldPassword, setToggleOldPassword] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  if (session.status !== "loading" && session.data?.user.id !== params.id) {
+    router.push("/");
+  }
 
   // Form for user login in with oauth
   const formOauth = useForm<PrivacyCenterOauthPayload>({
@@ -417,23 +425,7 @@ const Page = ({ params }: PageProps) => {
 
       <div className="h-[2px] w-full rounded-lg bg-zinc-200 dark:bg-zinc-700"></div>
 
-      <div className="flex flex-col gap-4">
-        <h3 className="text-xl font-semibold text-red-600">Delete account</h3>
-
-        <div className="flex flex-col gap-3">
-          <p>
-            Once you delete your account, there is no going back. Please be
-            certain
-          </p>
-
-          <Button
-            variant="outline"
-            className="w-fit bg-zinc-200 text-red-600 dark:bg-zinc-900"
-          >
-            Delete your account
-          </Button>
-        </div>
-      </div>
+      <DeleteAccount />
     </div>
   );
 };

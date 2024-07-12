@@ -22,12 +22,13 @@ import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 import { toast } from "sonner";
 import { register } from "@/actions/signup";
 import { registerSchema } from "@/lib/schemas/auth";
+import { useRouter } from "next/navigation";
 
 /////////////////////////////////////////////
 
 export const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -47,6 +48,8 @@ export const RegisterForm = () => {
         data.success && toast.success(`Success: ${data.success}`);
       });
     });
+
+    router.push("/auth/login");
 
     values.password = "";
     values.passwordConfirm = "";

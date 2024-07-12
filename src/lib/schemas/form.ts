@@ -42,6 +42,10 @@ export const PrivacyCenterCredentialsValidator = z
     path: ["passwordConfirm"],
   });
 
+export const DeleteAccountValidator = z.object({
+  password: z.string(),
+});
+
 ///////////////////////////
 
 // Types
@@ -55,3 +59,4 @@ export type PrivacyCenterOauthPayload = z.infer<
 export type PrivacyCenterCrendetialsPayload = z.infer<
   typeof PrivacyCenterCredentialsValidator
 >;
+export type DeleteAccountPayload = z.infer<typeof DeleteAccountValidator>;
