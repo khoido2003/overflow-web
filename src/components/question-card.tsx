@@ -41,13 +41,11 @@ import { toast } from "sonner";
 interface QuestionCardProps extends React.HTMLAttributes<HTMLDivElement> {
   question: GetQuestion;
   isBookmarked?: boolean;
-  isEdited?: boolean;
 }
 
 export const QuestionCard = ({
   question,
   isBookmarked,
-  isEdited,
   onClick,
   ...props
 }: QuestionCardProps) => {
@@ -86,6 +84,10 @@ export const QuestionCard = ({
     },
   });
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, []);
+
   return (
     <div
       {...props}
@@ -104,7 +106,7 @@ export const QuestionCard = ({
             <h3 className="line-clamp-1 text-xl font-bold">{question.title}</h3>
           </Link>
 
-          {isEdited && (
+          {session.data?.user.id === question.author.id && (
             <Dialog
               open={isOpen}
               onOpenChange={() => setIsOpen((open) => !open)}

@@ -9,6 +9,7 @@ import { ActionBarAnswer } from "./action-bar-answer";
 import Link from "next/link";
 
 import { useSession } from "next-auth/react";
+import EditComment from "./edit-comment";
 
 interface CommentDetailProps {
   answer: GetAllAnswers;
@@ -49,18 +50,25 @@ export const CommentDetail = ({ answer }: CommentDetailProps) => {
           </p>
         </div>
 
-        {/* Upvote/Downvote */}
-        <ActionBarAnswer
-          answerId={answer.id}
-          downvotesCount={answer.questionDownvotes.length}
-          hasDownvoted={answer.questionDownvotes.some(
-            (downvote) => downvote.userId === session?.data?.user.id,
+        <div className="flex items-center gap-2">
+          {/* Upvote/Downvote */}
+          <ActionBarAnswer
+            answerId={answer.id}
+            downvotesCount={answer.questionDownvotes.length}
+            hasDownvoted={answer.questionDownvotes.some(
+              (downvote) => downvote.userId === session?.data?.user.id,
+            )}
+            hasUpvoted={answer.questionUpvotes.some(
+              (upvote) => upvote.userId === session?.data?.user.id,
+            )}
+            upvotesCount={answer.questionUpvotes.length}
+          />
+
+          {/* EDIT COMMENT */}
+          {session.data?.user.id === answer.userId && (
+            <EditComment answer={answer} />
           )}
-          hasUpvoted={answer.questionUpvotes.some(
-            (upvote) => upvote.userId === session?.data?.user.id,
-          )}
-          upvotesCount={answer.questionUpvotes.length}
-        />
+        </div>
       </div>
 
       {/* Content */}
