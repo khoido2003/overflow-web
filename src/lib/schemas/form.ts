@@ -21,6 +21,27 @@ export const EditProfileValidator = z.object({
   portfolioWebsite: z.string().url().optional(),
 });
 
+export const PrivacyCenterOauthValidator = z
+  .object({
+    newPassword: z.string().min(8),
+    passwordConfirm: z.string().min(8),
+  })
+  .refine((data) => data.newPassword === data.passwordConfirm, {
+    message: "password and passwordConfirm do not match.",
+    path: ["passwordConfirm"],
+  });
+
+export const PrivacyCenterCredentialsValidator = z
+  .object({
+    oldPassword: z.string(),
+    newPassword: z.string().min(8),
+    passwordConfirm: z.string().min(8),
+  })
+  .refine((data) => data.newPassword === data.passwordConfirm, {
+    message: "password and passwordConfirm do not match.",
+    path: ["passwordConfirm"],
+  });
+
 ///////////////////////////
 
 // Types
@@ -28,3 +49,9 @@ export const EditProfileValidator = z.object({
 export type AskQuestionPayload = z.infer<typeof AskQuestionValiadator>;
 export type AnswerQuestionPayload = z.infer<typeof AnswerQuestionValidator>;
 export type EditProfilePayload = z.infer<typeof EditProfileValidator>;
+export type PrivacyCenterOauthPayload = z.infer<
+  typeof PrivacyCenterOauthValidator
+>;
+export type PrivacyCenterCrendetialsPayload = z.infer<
+  typeof PrivacyCenterCredentialsValidator
+>;

@@ -14,7 +14,14 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-import { LogInIcon, LogOut, Settings, User, VenetianMask } from "lucide-react";
+import {
+  Lock,
+  LogInIcon,
+  LogOut,
+  Settings,
+  User,
+  VenetianMask,
+} from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 
 export const UserAvatar = () => {
@@ -94,6 +101,13 @@ export const UserAvatar = () => {
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
+            </DropdownMenuItem>
+          </Link>
+
+          <Link href={`/privacy/${session.data.user.id}`}>
+            <DropdownMenuItem className="cursor-pointer">
+              <Lock className="mr-2 h-4 w-4" />
+              <span>Privacy Center</span>
             </DropdownMenuItem>
           </Link>
         </DropdownMenuGroup>

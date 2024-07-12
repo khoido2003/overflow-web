@@ -28,6 +28,10 @@ export const login = async (values: loginPayload) => {
       switch (err.type) {
         case "CredentialsSignin":
           return { error: "Invalid email or password!" };
+
+        case "CallbackRouteError":
+          return { error: "Invalid email or password!" };
+
         default:
           return {
             error: "Something went wrong!",
