@@ -1,6 +1,19 @@
 # Code Overflow
 
-![Code Overflow Icon](https://code-overflow-vn.vercel.app/assets/logo.svg)
+<div align="center">
+  <img src="https://code-overflow-vn.vercel.app/assets/logo.svg" alt="Code Overflow Icon" width="200">
+</div>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Code-Node.js-informational?style=flat&color=informational&logo=node.js">
+  <img src="https://img.shields.io/badge/Code-Next.js-informational?style=flat&color=informational&logo=next.js">
+  <img src="https://img.shields.io/badge/Code-React-informational?style=flat&color=informational&logo=react">
+  <img src="https://img.shields.io/badge/Style-Tailwind%20CSS-informational?style=flat&color=informational&logo=tailwind-css">
+  <img src="https://img.shields.io/badge/ORM-Prisma-informational?style=flat&color=success&logo=prisma">
+  <img src="https://img.shields.io/badge/Database-PostgreSQL-informational?style=flat&color=success&logo=postgresql">
+  <img src="https://img.shields.io/badge/Authentication-Auth.js-informational?style=flat&color=success&logo=auth0">
+  <img src="https://img.shields.io/badge/Language-TypeScript-informational?style=flat&color=blue&logo=typescript">
+</div>
 
 Welcome to Code Overflow, a modern platform inspired by Stack Overflow, designed to help developers ask and answer coding questions efficiently. This project leverages cutting-edge web technologies to deliver a seamless, user-friendly experience.
 
@@ -111,7 +124,12 @@ Once both the frontend and backend servers are running, you can access the appli
 
 <!-- ![Screenshot of Code Overflow](path/to/screenshot.png) -->
 
+## Screenshots
+
 <a href="https://ibb.co/Lndfq5R"><img src="https://i.ibb.co/zGVwLJx/1.png" alt="1" border="0"></a>
+<a href="https://ibb.co/41QLyrz"><img src="https://i.ibb.co/qJZ8GQK/2.png" alt="2" border="0"></a>
+<a href="https://ibb.co/Ny3HtsW"><img src="https://i.ibb.co/5R9fG6s/3.png" alt="3" border="0"></a>
+<a href="https://ibb.co/LYYSLqR"><img src="https://i.ibb.co/Kbb6MQh/4.png" alt="4" border="0"></a>
 
 ## Contributing
 
