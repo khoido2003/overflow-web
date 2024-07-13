@@ -186,6 +186,7 @@ export const RIGHT_SIDE_BAR_NOT_APPEAR = [
   "tag",
   "/community",
   "/jobs",
+  // "/privacy",
 ];
 
 export const SearchType = [

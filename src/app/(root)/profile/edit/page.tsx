@@ -300,7 +300,7 @@ const EditProfile = () => {
       <div className="hidden flex-col items-center gap-4 sm:flex">
         <div className="group relative z-20 block">
           <Image
-            src={userInfo?.image || "/default-avatar.png"}
+            src={userInfo?.image || "/assets/images/user-pro.png"}
             width={120}
             height={120}
             className="block aspect-square rounded-full ring-2 ring-primary"

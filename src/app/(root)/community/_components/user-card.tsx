@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import UserTopTag from "./user-top-tag";
 
 interface UserCardProps {
   user: {
@@ -14,7 +15,7 @@ const UserCard = ({ user }: UserCardProps) => {
   return (
     <Link
       href={`/profile/${user.id}`}
-      className="flex flex-1 flex-col items-center justify-between gap-3 rounded-xl border bg-zinc-100 px-8 py-6 shadow-md dark:bg-zinc-900 md:gap-5 md:px-10 md:py-8"
+      className="flex flex-1 flex-col items-center justify-between gap-3 rounded-xl border bg-zinc-100 px-6 py-4 shadow-md dark:bg-zinc-900 md:gap-4 md:px-10 md:py-8"
     >
       <div className="flex flex-col items-center gap-2 md:gap-4">
         <Image
@@ -35,11 +36,8 @@ const UserCard = ({ user }: UserCardProps) => {
           )}
         </div>
       </div>
-      <div>
-        <span>HTML</span>
-        <span>HTML</span>
-        <span>HTML</span>
-      </div>
+
+      <UserTopTag userId={user.id} />
     </Link>
   );
 };

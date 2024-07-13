@@ -34,6 +34,8 @@ export const TopTags = () => {
     staleTime: 0,
   });
 
+  console.log(topTags);
+
   if (isLoading || isPending)
     return (
       <div className="flex flex-col gap-2">
@@ -59,7 +61,7 @@ export const TopTags = () => {
                 {tag.name}
               </p>
 
-              <ChevronRight />
+              <p className="font-semibold">{tag._count.tagOnQuestion}</p>
             </Link>
           );
         })}

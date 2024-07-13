@@ -1,33 +1,27 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
-
 import {
   API_REQUEST_PREFIX,
   DEFAULT_QUESTION_PAGE_SIZE,
 } from "@/constants/fetch-request";
 
-import { QuestionCard } from "@/components/question-card";
-import { useEffect, useState } from "react";
 import { QuestionLoading } from "@/components/loading/question-loading";
+import { QuestionCard } from "@/components/question-card";
 import NoResult from "@/components/no-result";
-import PaginationBar from "@/components/pagination-bar";
-import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
+
+import { GetQuestion, UpdateQuestionViews } from "@/types/question.types";
 import { useSession } from "next-auth/react";
+import { useSearchParamsOptions } from "@/hooks/use-search-params-option";
+import { useEffect, useState } from "react";
+import PaginationBar from "@/components/pagination-bar";
 
-interface UserQuestionProps {
-  userId: string;
-}
-
-const UserQuestion = ({ userId }: UserQuestionProps) => {
+const QuestionTagList = ({ tagId }: { tagId: string }) => {
   const session = useSession();
 
-  const { filter, pageParams, pageSize, searchParams } = useSearchParamsOptions(
-    { defaultPageSize: DEFAULT_QUESTION_PAGE_SIZE },
-  );
-
-  const [currPage, setCurrPage] = useState<number>(pageParams);
+  const { searchQuery, pageParams, pageSize, searchParams } =
+    useSearchParamsOptions({ defaultPageSize: DEFAULT_QUESTION_PAGE_SIZE });
+  const [currPage, setCurrPage] = useState(+pageParams);
   const [totalPage, setTotalPage] = useState<number>(1);
 
   const {
@@ -35,20 +29,24 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["user-questions", userId, currPage, searchParams.get("filter")],
+    queryKey: ["tag-question", tagId, searchParams.get("q"), currPage],
     queryFn: async () => {
-      const url = new URL(`${API_REQUEST_PREFIX}/users/${userId}/questions`);
+      const url = new URL(`${API_REQUEST_PREFIX}/tags/${tagId}/questions`);
 
-      if (filter) url.searchParams.append("filter", filter);
+      if (searchQuery) url.searchParams.append("searchQuery", searchQuery);
       if (currPage) url.searchParams.append("page", currPage.toString());
       if (pageSize) url.searchParams.append("pageSize", pageSize.toString());
 
       const res = await fetch(url.toString());
       const data = await res.json();
-      setTotalPage(Math.ceil(+data.results / +pageSize));
 
-      return data.data as GetQuestion[];
+      setTotalPage(Math.ceil(+data.data.questionsCount / +pageSize));
+      console.log(data);
+
+      return data.data.questions as GetQuestion[];
     },
+    staleTime: 0,
+    retry: 3,
   });
 
   // Update question views
@@ -75,10 +73,9 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     onError: () => {},
   });
 
-  // reset currPage to 1 when filter changes
   useEffect(() => {
     setCurrPage(1);
-  }, [filter]);
+  }, [searchQuery]);
 
   const handleNextPage = () => {
     setCurrPage((prev) => prev + 1);
@@ -94,19 +91,19 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     setCurrPage(newPage);
   };
 
-  if (isLoading || isFetching || !session)
+  if (isLoading || isFetching || !questions)
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex animate-pulse flex-col gap-4">
         <QuestionLoading />
         <QuestionLoading />
         <QuestionLoading />
       </div>
     );
 
-  if (!questions)
+  if (questions.length === 0)
     return (
       <NoResult
-        title="There’s no question to show"
+        title="There's no question found with this tag!"
         description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
         link="/ask-question"
         linkTitle="Ask a Question"
@@ -114,15 +111,17 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
     );
 
   return (
-    <div>
-      <div className="flex flex-col gap-4">
-        {questions.map((question) => (
-          <QuestionCard
-            onClick={() => updateQuestionViews({ id: question.id })}
-            key={question.id}
-            question={question}
-          />
-        ))}
+    <>
+      <div className="flex flex-col gap-5">
+        {questions.map((question: GetQuestion) => {
+          return (
+            <QuestionCard
+              key={question.id}
+              onClick={() => updateQuestionViews({ id: question.id })}
+              question={question}
+            />
+          );
+        })}
       </div>
 
       {totalPage > 1 && (
@@ -136,8 +135,8 @@ const UserQuestion = ({ userId }: UserQuestionProps) => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
-export default UserQuestion;
+export default QuestionTagList;

@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
 import { BADGE_CRITERIA, RIGHT_SIDE_BAR_NOT_APPEAR } from "@/constants";
 import { BadgeCounts } from "@/types/user-profile.types";
-import path from "path";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
