@@ -1,7 +1,7 @@
 # Code Overflow
 
 <div align="center">
-  <img src="https://code-overflow-vn.vercel.app/assets/logo.svg" alt="Code Overflow Icon" width="200">
+  <img src="https://code-overflow-vn.vercel.app/assets/logo.svg" alt="Code Overflow Icon" width="100">
 </div>
 
 <div align="center">
