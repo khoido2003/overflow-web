@@ -148,7 +148,9 @@ export const DeleteAccount = () => {
 
                 <DialogFooter className="mt-2">
                   <DialogClose>
-                    <Button variant="outline">Cancel</Button>
+                    <Button type="reset" variant="outline">
+                      Cancel
+                    </Button>
                   </DialogClose>
 
                   <Button type="submit" variant="destructive">
